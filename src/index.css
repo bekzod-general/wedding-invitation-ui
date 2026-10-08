@@ -1,0 +1,86 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  body {
+    background-color: #12050A;
+    color: #F7E7CE;
+    font-family: 'Raleway', sans-serif;
+  }
+
+  h1, h2, h3, h4, .font-serif {
+    font-family: 'Bodoni Moda', serif;
+  }
+}
+
+@layer utilities {
+  /* Luxury Gold Gradient Text */
+  .text-gold-metallic {
+    background: linear-gradient(135deg, #F5E4BC 0%, #D4AF37 50%, #AA820A 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+  }
+
+  /* Shimmering Gold Foil Button */
+  .bg-gold-foil {
+    background: linear-gradient(135deg, #E5C158 0%, #D4AF37 50%, #AA820A 100%);
+    color: #12050A;
+  }
+
+  .bg-gold-foil:hover {
+    background: linear-gradient(135deg, #F3E5AB 0%, #E5C158 50%, #D4AF37 100%);
+    box-shadow: 0 0 24px rgba(212, 175, 55, 0.45);
+  }
+
+  /* Frosted Glass Velvet Card */
+  .glass-card {
+    background: rgba(74, 21, 37, 0.45);
+    backdrop-filter: blur(16px);
+    -webkit-backdrop-filter: blur(16px);
+    border: 1px solid rgba(212, 175, 55, 0.35);
+  }
+
+  .glass-card-elevated {
+    background: rgba(100, 30, 52, 0.65);
+    backdrop-filter: blur(20px);
+    -webkit-backdrop-filter: blur(20px);
+    border: 1px solid rgba(212, 175, 55, 0.55);
+    box-shadow: 0 8px 32px -4px rgba(0, 0, 0, 0.7), 0 0 16px 1px rgba(212, 175, 55, 0.15);
+  }
+
+  /* Stationery Architectural Double Rule Border */
+  .border-double-gold {
+    outline: 1px solid rgba(212, 175, 55, 0.45);
+    outline-offset: -4px;
+    border: 1px solid rgba(212, 175, 55, 0.45);
+  }
+
+  /* Hairline Divider */
+  .hairline-gold {
+    height: 1px;
+    background: linear-gradient(90deg, transparent 0%, rgba(212, 175, 55, 0.6) 50%, transparent 100%);
+  }
+
+  /* Ambient Velvet Glow */
+  .glow-velvet {
+    box-shadow: 0 0 35px rgba(74, 21, 37, 0.6);
+  }
+}
+
+/* Custom Scrollbar */
+::-webkit-scrollbar {
+  width: 6px;
+}
+
+::-webkit-scrollbar-track {
+  background: #12050A;
+}
+
+::-webkit-scrollbar-thumb {
+  background: rgba(212, 175, 55, 0.35);
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: rgba(212, 175, 55, 0.7);
+}
