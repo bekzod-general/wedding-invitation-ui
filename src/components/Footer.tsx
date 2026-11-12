@@ -1,13 +1,14 @@
 import React from 'react';
-import { Language, TRANSLATIONS } from '../data/weddingData';
+import { useTranslation } from 'react-i18next';
+import { Language } from '../data/weddingData';
 import { ChevronUp, Heart } from 'lucide-react';
 
 interface FooterProps {
-  language: Language;
+  language?: Language;
 }
 
-export const Footer: React.FC<FooterProps> = ({ language }) => {
-  const t = (key: string) => TRANSLATIONS[language][key] || key;
+export const Footer: React.FC<FooterProps> = () => {
+  const { t } = useTranslation();
 
   const scrollToTop = () => {
     window.scrollTo({ top: 0, behavior: 'smooth' });

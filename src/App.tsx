@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useRef } from 'react';
-import { Language, WEDDING_CONFIG } from './data/weddingData';
+import { WEDDING_CONFIG } from './data/weddingData';
 import { GoldParticles } from './components/GoldParticles';
 import { WaxSealIntro } from './components/WaxSealIntro';
 import { Navbar } from './components/Navbar';
@@ -10,7 +10,6 @@ import { GuestbookSection } from './components/GuestbookSection';
 import { Footer } from './components/Footer';
 
 export const App: React.FC = () => {
-  const [language, setLanguage] = useState<Language>('uz');
   const [isIntroOpen, setIsIntroOpen] = useState(false);
   const [isPlayingAudio, setIsPlayingAudio] = useState(false);
   const [activeSection, setActiveSection] = useState('hero');
@@ -94,13 +93,11 @@ export const App: React.FC = () => {
 
       {/* Wax Seal Luxury Entrance Modal */}
       {!isIntroOpen && (
-        <WaxSealIntro language={language} onOpen={handleOpenIntro} />
+        <WaxSealIntro onOpen={handleOpenIntro} />
       )}
 
       {/* Top Navigation Bar */}
       <Navbar
-        language={language}
-        onLanguageChange={setLanguage}
         activeSection={activeSection}
         isPlayingAudio={isPlayingAudio}
         onToggleAudio={toggleAudio}
@@ -109,23 +106,21 @@ export const App: React.FC = () => {
       {/* Main Single-Page Journey */}
       <main className="relative z-10 w-full overflow-x-hidden">
         <HeroSection
-          language={language}
           onNavigateToVenue={() => navigateToSection('venue')}
           isPlayingAudio={isPlayingAudio}
           onToggleAudio={toggleAudio}
         />
         <div className="hairline-gold max-w-lg mx-auto my-4" />
-        <VenueSection language={language} />
+        <VenueSection />
         <div className="hairline-gold max-w-lg mx-auto my-4" />
-        <GuestbookSection language={language} />
+        <GuestbookSection />
       </main>
 
       {/* Footer */}
-      <Footer language={language} />
+      <Footer />
 
       {/* Sticky Bottom Navigation Bar matching Stitch Mockup */}
       <BottomNav
-        language={language}
         activeSection={activeSection}
         onNavigate={navigateToSection}
       />

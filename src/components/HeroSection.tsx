@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
+import { useTranslation } from 'react-i18next';
 import {
   Language,
-  TRANSLATIONS,
   WEDDING_CONFIG,
   getGoogleCalendarUrl,
   downloadIcsFile,
@@ -17,7 +17,7 @@ import {
 } from 'lucide-react';
 
 interface HeroSectionProps {
-  language: Language;
+  language?: Language;
   onNavigateToVenue: () => void;
   isPlayingAudio?: boolean;
   onToggleAudio?: () => void;
@@ -31,12 +31,12 @@ interface TimeLeft {
 }
 
 export const HeroSection: React.FC<HeroSectionProps> = ({
-  language,
   onNavigateToVenue,
   isPlayingAudio,
   onToggleAudio,
 }) => {
-  const t = (key: string) => TRANSLATIONS[language][key] || key;
+  const { t, i18n } = useTranslation();
+  const currentLang = (i18n.language || 'uz') as Language;
   const [showCalendarOptions, setShowCalendarOptions] = useState(false);
 
   // Live Countdown state
@@ -94,7 +94,7 @@ export const HeroSection: React.FC<HeroSectionProps> = ({
               BP
             </span>
             <span className="text-[8px] uppercase tracking-widest text-champagne-muted font-sans mt-0.5">
-              NIKOH TO'YI
+              {t('hero.weddingCelebration')}
             </span>
           </div>
         </div>
@@ -106,11 +106,11 @@ export const HeroSection: React.FC<HeroSectionProps> = ({
 
         {/* Couple Names in Bodoni Moda */}
         <h1 className="font-serif text-4xl sm:text-5xl text-champagne font-normal tracking-tight leading-none mb-1">
-          <span>{WEDDING_CONFIG.groom}</span>
+          <span>{t('hero.groom')}</span>
           <span className="text-gold font-serif italic mx-2.5 sm:mx-3 font-normal">
-            &
+            &amp;
           </span>
-          <span>{WEDDING_CONFIG.bride}</span>
+          <span>{t('hero.bride')}</span>
         </h1>
 
         {/* Subtitle Surnames */}
@@ -144,7 +144,7 @@ export const HeroSection: React.FC<HeroSectionProps> = ({
             BP
           </div>
 
-          <div className="relative z-10  text-center">
+          <div className="relative z-10 text-center">
             <h3 className="font-serif text-base sm:text-lg text-champagne font-medium mb-2">
               {t('hero.invitation_dear')}
             </h3>
@@ -154,7 +154,7 @@ export const HeroSection: React.FC<HeroSectionProps> = ({
             <div className="pt-2 border-t border-gold/15 flex items-center justify-between text-[11px] text-gold/90 font-serif">
               <span>{t('hero.family_hosts')}</span>
               <span className="text-[10px] text-champagne-muted font-sans">
-                {WEDDING_CONFIG.city} • 2027
+                {t('hero.cityYear')}
               </span>
             </div>
           </div>
@@ -201,7 +201,7 @@ export const HeroSection: React.FC<HeroSectionProps> = ({
             {showCalendarOptions && (
               <div className="absolute left-0 right-0 mt-1 bg-surface-lowest border border-gold/50 shadow-velvet-depth z-30 p-1">
                 <a
-                  href={getGoogleCalendarUrl()}
+                  href={getGoogleCalendarUrl(currentLang)}
                   target="_blank"
                   rel="noopener noreferrer"
                   onClick={() => setShowCalendarOptions(false)}
@@ -211,7 +211,7 @@ export const HeroSection: React.FC<HeroSectionProps> = ({
                 </a>
                 <button
                   onClick={() => {
-                    downloadIcsFile();
+                    downloadIcsFile(currentLang);
                     setShowCalendarOptions(false);
                   }}
                   className="block w-full px-3 py-2 text-xs text-champagne hover:text-gold hover:bg-velvet/40 text-left transition-colors border-t border-gold/15"
@@ -223,13 +223,13 @@ export const HeroSection: React.FC<HeroSectionProps> = ({
           </div>
         </div>
 
-        {/* Ambient Wedding Music Player Bar matching screenshot */}
+        {/* Ambient Wedding Music Player Bar */}
         <div className="w-full bg-surface-lowest/90 border border-gold/40 p-2.5 mb-5 flex items-center justify-between shadow-sm">
           <div className="flex items-center gap-2.5 text-left overflow-hidden">
             <button
               onClick={onToggleAudio}
               className="w-7 h-7 rounded-none bg-gold-foil text-void flex items-center justify-center flex-shrink-0 shadow-sm"
-              aria-label="Toggle music"
+              aria-label={isPlayingAudio ? t('audio.pauseAria') : t('audio.playAria')}
             >
               {isPlayingAudio ? (
                 <Pause className="w-3.5 h-3.5 text-void" />
@@ -240,7 +240,7 @@ export const HeroSection: React.FC<HeroSectionProps> = ({
             <div className="min-w-0">
               <p className="text-[9px] uppercase tracking-wider text-champagne-muted flex items-center gap-1">
                 <Music className="w-2.5 h-2.5 text-gold" />
-                <span>TO'Y MUSIQASI</span>
+                <span>{t('hero.musicLabel')}</span>
               </p>
               <p className="text-[11px] text-champagne truncate font-medium">
                 {t('hero.audio_playing')}
@@ -269,23 +269,23 @@ export const HeroSection: React.FC<HeroSectionProps> = ({
         {/* Banquet Hall Teaser Card */}
         <div className="w-full glass-card-elevated p-4 sm:p-5 mb-6 text-left relative">
           <div className="flex items-center justify-between text-[10px] uppercase tracking-wider text-gold mb-1">
-            <span>TO'YXONA VA MANZIL</span>
+            <span>{t('hero.venueTeaserTitle')}</span>
             <span className="px-1.5 py-0.5 bg-velvet border border-gold/40 text-[9px]">
-              Buxoro • 18:00
+              {t('hero.venueTime')}
             </span>
           </div>
           <h4 className="font-serif text-base sm:text-lg text-champagne font-medium">
-            {WEDDING_CONFIG.venue.nameUz}
+            {t('venue.name')}
           </h4>
           <p className="text-xs text-champagne-muted font-light mb-3">
-            {WEDDING_CONFIG.venue.addressUz}
+            {t('venue.address')}
           </p>
           <button
             onClick={scrollToVenue}
             className="w-full py-2 bg-velvet/80 hover:bg-velvet border border-gold/50 text-gold text-xs uppercase tracking-widest font-semibold flex items-center justify-center gap-2 transition-all"
           >
             <MapPin className="w-3.5 h-3.5 text-gold" />
-            <span>XARITADA KO'RISH</span>
+            <span>{t('hero.viewOnMap')}</span>
           </button>
         </div>
 

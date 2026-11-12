@@ -1,17 +1,18 @@
 import React, { useState, useEffect } from 'react';
-import { Language, TRANSLATIONS, INITIAL_WISHES, Wish } from '../data/weddingData';
+import { useTranslation } from 'react-i18next';
+import { Language, INITIAL_WISHES, Wish } from '../data/weddingData';
 import { Heart, Send, MessageCircle, Mic } from 'lucide-react';
 
 interface GuestbookSectionProps {
-  language: Language;
+  language?: Language;
 }
 
-export const GuestbookSection: React.FC<GuestbookSectionProps> = ({ language }) => {
-  const t = (key: string) => TRANSLATIONS[language][key] || key;
+export const GuestbookSection: React.FC<GuestbookSectionProps> = () => {
+  const { t } = useTranslation();
 
   const [wishes, setWishes] = useState<Wish[]>(INITIAL_WISHES);
   const [name, setName] = useState('');
-  const [relationship, setRelationship] = useState('Qadrdon do\'stlar');
+  const [relationship, setRelationship] = useState('friends');
   const [message, setMessage] = useState('');
   const [virtualGift, setVirtualGift] = useState('💍');
   const [likedWishes, setLikedWishes] = useState<Record<string, boolean>>({});
@@ -40,52 +41,93 @@ export const GuestbookSection: React.FC<GuestbookSectionProps> = ({ language }) 
     }
   }, []);
 
-  const getInitials = (str: string) => {
-    const parts = str.trim().split(/\s+/);
-    if (parts.length >= 2) {
-      return `${parts[0][0]}${parts[1][0]}`.toUpperCase();
+  const getRelationshipLabel = (item: Wish) => {
+    if (item.relationshipKey) {
+      switch (item.relationshipKey) {
+        case 'groom':
+          return t('wishes.relGroom');
+        case 'bride':
+          return t('wishes.relBride');
+        case 'friends':
+          return t('wishes.relFriends');
+        case 'relatives':
+          return t('wishes.relRelatives');
+        case 'colleagues':
+          return t('wishes.relColleagues');
+        default:
+          return item.relationshipKey;
+      }
     }
-    return str.slice(0, 2).toUpperCase();
+    return item.relationship;
+  };
+
+  const getDateDisplay = (item: Wish) => {
+    if (item.dateType === 'today') {
+      return `${t('wishes.today')}, ${item.time || ''}`.trim();
+    }
+    if (item.dateType === 'yesterday') {
+      return `${t('wishes.yesterday')}, ${item.time || ''}`.trim();
+    }
+    if (item.dateType === 'justNow') {
+      return t('wishes.justNow');
+    }
+    return item.date || t('wishes.justNow');
   };
 
   const handleAddWish = (e: React.FormEvent) => {
     e.preventDefault();
     if (!name.trim() || !message.trim()) return;
 
+    const initials = name
+      .trim()
+      .split(/\s+/)
+      .map((part) => part[0]?.toUpperCase())
+      .filter(Boolean)
+      .slice(0, 2)
+      .join('');
+
     const newWish: Wish = {
       id: `wish-${Date.now()}`,
       name: name.trim(),
-      initials: getInitials(name),
-      relationship: relationship || undefined,
-      message: `${message.trim()} ${virtualGift}`,
-      date: t('wishes.justNow'),
+      initials: initials || 'BP',
+      relationshipKey: relationship,
+      message: `${virtualGift} ${message.trim()}`,
+      dateType: 'justNow',
       hearts: 1,
     };
 
     const updated = [newWish, ...wishes];
     setWishes(updated);
-    localStorage.setItem('wedding_guest_wishes', JSON.stringify(updated));
+    try {
+      localStorage.setItem('wedding_guest_wishes', JSON.stringify(updated));
+    } catch (e) {
+      console.error('Could not save wish', e);
+    }
 
     setName('');
     setMessage('');
   };
 
-  const handleToggleHeart = (id: string) => {
-    const isLiked = likedWishes[id];
-    setLikedWishes({ ...likedWishes, [id]: !isLiked });
+  const handleToggleHeart = (wishId: string) => {
+    const isCurrentlyLiked = likedWishes[wishId];
+    setLikedWishes((prev) => ({ ...prev, [wishId]: !isCurrentlyLiked }));
 
-    const updated = wishes.map((w) => {
-      if (w.id === id) {
+    const updated = wishes.map((item) => {
+      if (item.id === wishId) {
         return {
-          ...w,
-          hearts: isLiked ? Math.max(0, w.hearts - 1) : w.hearts + 1,
+          ...item,
+          hearts: isCurrentlyLiked ? item.hearts - 1 : item.hearts + 1,
         };
       }
-      return w;
+      return item;
     });
 
     setWishes(updated);
-    localStorage.setItem('wedding_guest_wishes', JSON.stringify(updated));
+    try {
+      localStorage.setItem('wedding_guest_wishes', JSON.stringify(updated));
+    } catch (e) {
+      console.error('Could not save updated heart count', e);
+    }
   };
 
   return (
@@ -94,11 +136,10 @@ export const GuestbookSection: React.FC<GuestbookSectionProps> = ({ language }) 
       className="relative py-16 px-4 sm:px-6 w-full overflow-x-hidden flex flex-col items-center"
     >
       <div className="w-full max-w-lg mx-auto">
-        {/* Monogram Crest & Header */}
-        <div className="text-center mb-6">
-          <div className="w-16 h-16 border border-gold/60 mx-auto flex flex-col items-center justify-center bg-velvet/50 shadow-velvet-depth relative mb-3">
-            <div className="absolute inset-1 border border-gold/30 pointer-events-none" />
-            <span className="font-serif text-xl text-gold font-light tracking-widest">
+        {/* Section Header */}
+        <div className="text-center mb-8">
+          <div className="w-12 h-12 border border-gold/50 mx-auto mb-3 flex items-center justify-center bg-velvet/50 rotate-45 shadow-sm">
+            <span className="-rotate-45 font-serif text-xl text-gold font-light tracking-widest">
               BP
             </span>
           </div>
@@ -131,7 +172,7 @@ export const GuestbookSection: React.FC<GuestbookSectionProps> = ({ language }) 
             {/* Name Input */}
             <div>
               <label className="block text-[11px] uppercase tracking-wider text-champagne-muted font-sans mb-1.5">
-                ISMINGIZ VA FAMILIYANGIZ *
+                {t('wishes.fullNameLabel')}
               </label>
               <input
                 type="text"
@@ -139,24 +180,24 @@ export const GuestbookSection: React.FC<GuestbookSectionProps> = ({ language }) 
                 value={name}
                 onChange={(e) => setName(e.target.value)}
                 placeholder={t('wishes.namePlaceholder')}
-                className="w-full px-4 py-2.5 bg-surface-lowest/80 border border-gold/40 text-champagne placeholder-champagne-muted/40 text-xs focus:outline-none focus:border-gold focus:ring-1 focus:ring-gold transition-all"
+                className="w-full px-4 py-2 bg-surface-lowest/80 border border-gold/40 text-champagne placeholder-champagne-muted/40 text-xs focus:outline-none focus:border-gold focus:ring-1 focus:ring-gold transition-all"
               />
             </div>
 
-            {/* Relationship Selector Pills */}
+            {/* Relationship Selector */}
             <div>
               <label className="block text-[11px] uppercase tracking-wider text-champagne-muted font-sans mb-1.5">
                 {t('wishes.relation')}
               </label>
-              <div className="grid grid-cols-2 gap-1.5">
+              <div className="grid grid-cols-2 sm:grid-cols-3 gap-1.5">
                 {relationshipOptions.map((opt) => {
-                  const isSelected = relationship === opt.label;
+                  const isSelected = relationship === opt.id;
                   return (
                     <button
                       key={opt.id}
                       type="button"
-                      onClick={() => setRelationship(opt.label)}
-                      className={`text-[11px] py-1.5 px-2 border text-center transition-all truncate ${
+                      onClick={() => setRelationship(opt.id)}
+                      className={`py-1.5 px-2 text-[10px] uppercase tracking-wider border transition-all text-center truncate ${
                         isSelected
                           ? 'bg-velvet border-gold text-gold font-semibold shadow-gold-subtle'
                           : 'bg-surface-lowest/70 text-champagne-muted border-gold/25 hover:border-gold/50'
@@ -176,7 +217,7 @@ export const GuestbookSection: React.FC<GuestbookSectionProps> = ({ language }) 
                   {t('wishes.messageLabel')}
                 </label>
                 <span className="text-[10px] text-gold/80 italic font-serif">
-                  Oq Fotiha
+                  {t('wishes.blessingTag')}
                 </span>
               </div>
               <textarea
@@ -241,7 +282,7 @@ export const GuestbookSection: React.FC<GuestbookSectionProps> = ({ language }) 
               {t('wishes.wallTitle')}
             </span>
             <span className="text-[10px] text-champagne-muted bg-surface-lowest px-2 py-0.5 border border-gold/30">
-              {wishes.length} ta tilak
+              {wishes.length} {t('wishes.countSuffix')}
             </span>
           </div>
 
@@ -263,16 +304,16 @@ export const GuestbookSection: React.FC<GuestbookSectionProps> = ({ language }) 
                         <h4 className="font-serif text-sm text-champagne font-medium leading-tight">
                           {item.name}
                         </h4>
-                        {item.relationship && (
+                        {(item.relationshipKey || item.relationship) && (
                           <span className="text-[9px] uppercase tracking-wider text-gold/80 font-sans block mt-0.5">
-                            {item.relationship}
+                            {getRelationshipLabel(item)}
                           </span>
                         )}
                       </div>
                     </div>
 
                     <span className="text-[10px] text-champagne-muted/60 font-sans whitespace-nowrap">
-                      {item.date}
+                      {getDateDisplay(item)}
                     </span>
                   </div>
 

@@ -1,4 +1,5 @@
 import React from 'react';
+import { useTranslation } from 'react-i18next';
 import { Volume2, VolumeX } from 'lucide-react';
 
 interface AudioPlayerProps {
@@ -7,11 +8,13 @@ interface AudioPlayerProps {
 }
 
 export const AudioPlayer: React.FC<AudioPlayerProps> = ({ isPlaying, onToggle }) => {
+  const { t } = useTranslation();
+
   return (
     <div className="fixed bottom-6 right-6 z-50">
       <button
         onClick={onToggle}
-        aria-label={isPlaying ? 'Pause background music' : 'Play background music'}
+        aria-label={isPlaying ? t('audio.pauseAria') : t('audio.playAria')}
         className="relative group flex items-center gap-2.5 px-3.5 py-2.5 bg-surface/90 hover:bg-velvet text-gold border border-gold/40 shadow-velvet-depth hover:border-gold transition-all duration-300 backdrop-blur-md"
       >
         <span className="relative flex h-3 w-3 items-center justify-center">
@@ -32,7 +35,7 @@ export const AudioPlayer: React.FC<AudioPlayerProps> = ({ isPlaying, onToggle })
         )}
 
         <span className="hidden sm:inline text-xs uppercase tracking-widest font-sans font-medium text-champagne group-hover:text-gold transition-colors">
-          {isPlaying ? 'Musiqa' : 'Ovoz'}
+          {isPlaying ? t('audio.music') : t('audio.sound')}
         </span>
 
         {isPlaying && (

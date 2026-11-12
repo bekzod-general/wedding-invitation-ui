@@ -1,22 +1,25 @@
 import React from 'react';
+import { useTranslation } from 'react-i18next';
 import { Language } from '../data/weddingData';
 import { Volume2, VolumeX } from 'lucide-react';
 
 interface NavbarProps {
-  language: Language;
-  onLanguageChange: (lang: Language) => void;
+  language?: Language;
+  onLanguageChange?: (lang: Language) => void;
   activeSection: string;
   isPlayingAudio?: boolean;
   onToggleAudio?: () => void;
 }
 
 export const Navbar: React.FC<NavbarProps> = ({
-  language,
+  language: propLanguage,
   onLanguageChange,
   activeSection,
   isPlayingAudio,
   onToggleAudio,
 }) => {
+  const { t, i18n } = useTranslation();
+  const currentLang = (i18n.language || propLanguage || 'uz') as Language;
 
   const scrollTo = (id: string) => {
     const element = document.getElementById(id);
@@ -25,21 +28,28 @@ export const Navbar: React.FC<NavbarProps> = ({
     }
   };
 
+  const handleSelectLanguage = (lang: Language) => {
+    i18n.changeLanguage(lang);
+    if (onLanguageChange) {
+      onLanguageChange(lang);
+    }
+  };
+
   const getSectionTitle = () => {
     switch (activeSection) {
       case 'venue':
-        return language === 'ru' ? 'LOCATION & VENUE' : 'TO\'YXONA MANZILI';
+        return t('nav.sectionVenue');
       case 'wishes':
-        return language === 'ru' ? 'WISHES & GUESTBOOK' : 'EZGU TILAKLAR';
+        return t('nav.sectionWishes');
       default:
-        return language === 'ru' ? 'INVITATION • HOME' : 'NIKOH TO\'YI';
+        return t('nav.sectionCeremony');
     }
   };
 
   return (
     <header className="fixed top-0 left-0 right-0 z-40 bg-surface-lowest/95 backdrop-blur-md border-b border-gold/30 transition-all">
       <div className="max-w-lg mx-auto px-3 sm:px-4 h-14 flex items-center justify-between">
-        {/* Brand Monogram & Section Breadcrumb matching screenshot */}
+        {/* Brand Monogram & Section Breadcrumb */}
         <button
           onClick={() => scrollTo('hero')}
           className="flex items-center gap-2 text-left group min-w-0"
@@ -68,11 +78,11 @@ export const Navbar: React.FC<NavbarProps> = ({
           {/* Language Switcher Segmented Control */}
           <div className="flex items-center border border-gold/40 bg-surface-lowest p-0.5">
             {(['uz', 'ru', 'en'] as Language[]).map((lang) => {
-              const isSelected = language === lang;
+              const isSelected = currentLang === lang;
               return (
                 <button
                   key={lang}
-                  onClick={() => onLanguageChange(lang)}
+                  onClick={() => handleSelectLanguage(lang)}
                   className={`px-2 py-0.5 text-[10px] uppercase tracking-wider font-semibold transition-all relative ${
                     isSelected
                       ? 'bg-velvet text-gold font-bold shadow-sm'
@@ -98,8 +108,8 @@ export const Navbar: React.FC<NavbarProps> = ({
                   ? 'bg-velvet border-gold text-gold shadow-gold-subtle'
                   : 'bg-surface-lowest border-gold/30 text-champagne-muted hover:border-gold/60'
               }`}
-              title="Music"
-              aria-label="Toggle background music"
+              title={t('audio.music')}
+              aria-label={isPlayingAudio ? t('audio.pauseAria') : t('audio.playAria')}
             >
               {isPlayingAudio ? (
                 <Volume2 className="w-3.5 h-3.5 text-gold animate-pulse" />

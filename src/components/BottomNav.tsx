@@ -1,36 +1,36 @@
 import React from 'react';
-import { Language, TRANSLATIONS } from '../data/weddingData';
+import { useTranslation } from 'react-i18next';
+import { Language } from '../data/weddingData';
 import { Heart, MapPin, MessageSquare } from 'lucide-react';
 
 interface BottomNavProps {
-  language: Language;
+  language?: Language;
   activeSection: string;
   onNavigate: (sectionId: string) => void;
 }
 
 export const BottomNav: React.FC<BottomNavProps> = ({
-  language,
   activeSection,
   onNavigate,
 }) => {
-  const t = (key: string) => TRANSLATIONS[language][key] || key;
+  const { t } = useTranslation();
 
   const items = [
     {
       id: 'hero',
-      label: language === 'ru' ? 'CEREMONY' : language === 'uz' ? 'TAKLIFNOMA' : 'CEREMONY',
+      label: t('bottomNav.ceremony'),
       sublabel: t('nav.invitation'),
       icon: Heart,
     },
     {
       id: 'venue',
-      label: language === 'ru' ? 'VENUE' : language === 'uz' ? 'MANZIL' : 'VENUE',
+      label: t('bottomNav.venue'),
       sublabel: t('nav.venue'),
       icon: MapPin,
     },
     {
       id: 'wishes',
-      label: language === 'ru' ? 'WISHES' : language === 'uz' ? 'TILAKLAR' : 'WISHES',
+      label: t('bottomNav.wishes'),
       sublabel: t('nav.wishes'),
       icon: MessageSquare,
     },

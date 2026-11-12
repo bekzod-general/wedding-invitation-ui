@@ -1,19 +1,20 @@
 import React, { useState } from 'react';
-import { Language, TRANSLATIONS, WEDDING_CONFIG } from '../data/weddingData';
+import { useTranslation } from 'react-i18next';
+import { Language, WEDDING_CONFIG } from '../data/weddingData';
 import { MapPin, Navigation, Copy, Check, ExternalLink, Phone, Car } from 'lucide-react';
 
 interface VenueSectionProps {
-  language: Language;
+  language?: Language;
 }
 
-export const VenueSection: React.FC<VenueSectionProps> = ({ language }) => {
+export const VenueSection: React.FC<VenueSectionProps> = () => {
+  const { t } = useTranslation();
   const [copied, setCopied] = useState(false);
   const [mapType, setMapType] = useState<'standard' | 'satellite'>('standard');
-  const t = (key: string) => TRANSLATIONS[language][key] || key;
 
   const handleCopyAddress = () => {
     navigator.clipboard.writeText(
-      `${WEDDING_CONFIG.venue.nameUz}, ${WEDDING_CONFIG.venue.addressUz} (${WEDDING_CONFIG.venue.lat}, ${WEDDING_CONFIG.venue.lng})`
+      `${t('venue.name')}, ${t('venue.address')} (${WEDDING_CONFIG.venue.lat}, ${WEDDING_CONFIG.venue.lng})`
     );
     setCopied(true);
     setTimeout(() => setCopied(false), 2500);
@@ -46,11 +47,11 @@ export const VenueSection: React.FC<VenueSectionProps> = ({ language }) => {
           </div>
 
           <h2 className="font-serif text-2xl sm:text-3xl text-champagne font-normal tracking-wide mb-1">
-            {WEDDING_CONFIG.venue.nameUz}
+            {t('venue.name')}
           </h2>
 
           <p className="text-xs sm:text-sm text-champagne-muted font-light leading-relaxed mb-4">
-            {WEDDING_CONFIG.venue.addressUz}
+            {t('venue.address')}
           </p>
 
           <p className="text-xs text-gold/90 italic font-sans mb-4 p-2.5 bg-surface-lowest/70 border border-gold/20">
@@ -73,7 +74,7 @@ export const VenueSection: React.FC<VenueSectionProps> = ({ language }) => {
                       : 'text-champagne-muted border-transparent'
                   }`}
                 >
-                  Xarita
+                  {t('venue.mapModeStandard')}
                 </button>
                 <button
                   onClick={() => setMapType('satellite')}
@@ -83,7 +84,7 @@ export const VenueSection: React.FC<VenueSectionProps> = ({ language }) => {
                       : 'text-champagne-muted border-transparent'
                   }`}
                 >
-                  Sun'iy Yo'ldosh
+                  {t('venue.mapModeSatellite')}
                 </button>
               </div>
             </div>
@@ -111,7 +112,7 @@ export const VenueSection: React.FC<VenueSectionProps> = ({ language }) => {
             className="w-full py-3.5 bg-gold-foil text-void font-sans text-xs uppercase tracking-widest font-bold border border-gold shadow-gold-glow hover:scale-[1.01] active:scale-95 transition-all flex items-center justify-center gap-2 mb-2.5"
           >
             <MapPin className="w-4 h-4 text-void" />
-            <span>{t('venue.btnYandexMaps')} (Yandex Maps)</span>
+            <span>{t('venue.btnYandexMaps')}</span>
             <ExternalLink className="w-3.5 h-3.5 text-void/80 ml-1" />
           </a>
 

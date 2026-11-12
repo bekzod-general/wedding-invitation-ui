@@ -1,15 +1,14 @@
 import React, { useState } from 'react';
-import { Language, TRANSLATIONS, WEDDING_CONFIG } from '../data/weddingData';
+import { useTranslation } from 'react-i18next';
 import { Sparkles, Heart } from 'lucide-react';
 
 interface WaxSealIntroProps {
-  language: Language;
   onOpen: () => void;
 }
 
-export const WaxSealIntro: React.FC<WaxSealIntroProps> = ({ language, onOpen }) => {
+export const WaxSealIntro: React.FC<WaxSealIntroProps> = ({ onOpen }) => {
+  const { t } = useTranslation();
   const [isOpening, setIsOpening] = useState(false);
-  const t = (key: string) => TRANSLATIONS[language][key] || key;
 
   const handleOpenClick = () => {
     setIsOpening(true);
@@ -59,11 +58,11 @@ export const WaxSealIntro: React.FC<WaxSealIntroProps> = ({ language, onOpen }) 
         </p>
 
         <h1 className="font-serif text-3xl sm:text-4xl text-champagne font-light tracking-wide mb-1">
-          {WEDDING_CONFIG.groom} <span className="text-gold italic font-normal">&amp;</span> {WEDDING_CONFIG.bride}
+          {t('intro.groomBrideNames')}
         </h1>
 
         <p className="font-serif text-xs text-gold/80 tracking-widest uppercase mb-3">
-          {WEDDING_CONFIG.groomFullName} &amp; {WEDDING_CONFIG.brideFullName}
+          {t('intro.names')}
         </p>
 
         <div className="hairline-gold w-32 mx-auto my-3" />
@@ -88,7 +87,7 @@ export const WaxSealIntro: React.FC<WaxSealIntroProps> = ({ language, onOpen }) 
         </div>
 
         <p className="mt-5 text-[10px] uppercase tracking-widest text-champagne-muted/70 font-mono">
-          10.01.2027 • BUXORO
+          {t('intro.dateCity')}
         </p>
       </div>
     </div>
