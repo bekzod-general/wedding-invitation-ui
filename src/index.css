@@ -261,7 +261,26 @@
   }
 }
 
-/* Vertical Countdown Slide-Fade */
+/* Mechanical Watch Roller Reel (Continuous Slide Without Disappearing) */
+@keyframes rollerSlideDownOut {
+  0% {
+    transform: translateY(0%);
+  }
+  100% {
+    transform: translateY(100%);
+  }
+}
+
+@keyframes rollerSlideDownIn {
+  0% {
+    transform: translateY(-100%);
+  }
+  100% {
+    transform: translateY(0%);
+  }
+}
+
+/* Vertical Countdown Slide-Fade (Legacy fallback) */
 @keyframes digitSlideInUp {
   0% {
     transform: translateY(70%);
@@ -366,6 +385,38 @@
   box-shadow: 0 0 8px rgba(212, 175, 55, 0.7);
   transition: width 0.12s ease-out;
   will-change: width;
+}
+
+/* Ken Burns Subtle Photo Motion */
+@keyframes kenBurns {
+  0% {
+    transform: scale(1.04) translate(0, 0);
+  }
+  50% {
+    transform: scale(1.1) translate(-0.8%, -0.8%);
+  }
+  100% {
+    transform: scale(1.04) translate(0, 0);
+  }
+}
+
+.animate-ken-burns {
+  animation: kenBurns 18s ease-in-out infinite alternate;
+  will-change: transform;
+}
+
+/* Arched Editorial Photo Frame */
+.arched-photo-frame {
+  border-top-left-radius: 140px;
+  border-top-right-radius: 140px;
+  border-bottom-left-radius: 8px;
+  border-bottom-right-radius: 8px;
+  overflow: hidden;
+  position: relative;
+}
+
+.gold-glow-border {
+  box-shadow: 0 12px 35px rgba(0, 0, 0, 0.8), 0 0 30px rgba(212, 175, 55, 0.25);
 }
 
 /* Accessibility: Prefers Reduced Motion */

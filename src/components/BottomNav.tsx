@@ -61,13 +61,13 @@ export const BottomNav: React.FC<BottomNavProps> = ({
                 <span className="absolute -top-1.5 left-2 right-2 h-[2px] bg-gold shadow-[0_0_10px_rgba(212,175,55,0.8)]" />
               )}
               <IconComponent
-                className={`w-4 h-4 mb-0.5 transition-all duration-300 ${
+                className={`w-4.5 h-4.5 mb-1 transition-all duration-300 ${
                   isActive
-                    ? 'scale-110 text-gold stroke-[2.4] drop-shadow-[0_0_6px_rgba(212,175,55,0.6)]'
+                    ? 'scale-110 text-gold stroke-[2.4] drop-shadow-[0_0_8px_rgba(212,175,55,0.7)]'
                     : 'stroke-[1.6]'
                 }`}
               />
-              <span className="font-sans text-[9px] uppercase tracking-wider font-semibold">
+              <span className="font-sans text-[10px] sm:text-xs uppercase tracking-wider font-semibold">
                 {item.label}
               </span>
             </button>

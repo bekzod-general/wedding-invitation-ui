@@ -131,29 +131,29 @@ export const WaxSealIntro: React.FC<WaxSealIntroProps> = ({ onOpen }) => {
       <div className="absolute w-80 sm:w-[460px] h-80 sm:h-[460px] bg-velvet/40 rounded-full blur-3xl pointer-events-none animate-pulse" />
 
       {/* Outer Envelope 3D Stage */}
-      <div className="relative w-full max-w-[360px] sm:max-w-[420px] perspective-1200 flex flex-col items-center pt-8">
+      <div className="relative w-full max-w-[420px] sm:max-w-[470px] perspective-1200 flex flex-col items-center pt-6">
         {/* Envelope Top Header Tag */}
         <div className="text-center mb-4 transition-all duration-500">
-          <p className="text-[10px] sm:text-xs uppercase tracking-extrawide text-gold font-sans font-semibold mb-1">
+          <p className="text-xs sm:text-sm uppercase tracking-extrawide text-gold font-sans font-semibold mb-1">
             {t('intro.title')}
           </p>
-          <p className="text-[10px] text-champagne-muted/80 font-mono tracking-widest">
+          <p className="text-xs text-champagne-muted/90 font-mono tracking-widest">
             {t('intro.dateCity')}
           </p>
         </div>
 
         {/* The 3D Envelope Body Container */}
-        <div className="relative w-full h-[260px] sm:h-[285px] preserve-3d shadow-[0_20px_50px_rgba(0,0,0,0.85)] border border-gold/40 bg-surface-lowest">
+        <div className="relative w-full h-[280px] sm:h-[310px] preserve-3d shadow-[0_25px_60px_rgba(0,0,0,0.9)] border border-gold/45 bg-surface-lowest">
           {/* 1. Envelope Back Inner Liner with Golden Damask Trim */}
           <div className="absolute inset-0 bg-gradient-to-b from-[#2E0B15] to-[#16040B] border border-gold/30 overflow-hidden">
-            <div className="absolute inset-0 opacity-15 bg-[radial-gradient(#D4AF37_1px,transparent_1px)] [background-size:12px_12px]" />
+            <div className="absolute inset-0 opacity-20 bg-[radial-gradient(#D4AF37_1px,transparent_1px)] [background-size:12px_12px]" />
           </div>
 
           {/* 2. Royal Stationery Invitation Letter (Slides Upwards out of Pocket) */}
           <div
-            className={`absolute left-3 right-3 sm:left-4 sm:right-4 top-2 h-[245px] sm:h-[265px] bg-surface-container border border-gold/60 p-4 sm:p-5 text-center shadow-2xl transition-all duration-1000 ease-out preserve-3d ${
+            className={`absolute left-3 right-3 sm:left-4 sm:right-4 top-2 h-[265px] sm:h-[290px] bg-surface-container border border-gold/60 p-3.5 sm:p-5 text-center shadow-2xl transition-all duration-1000 ease-out preserve-3d flex flex-col items-center justify-between ${
               isCardExtracted
-                ? '-translate-y-28 sm:-translate-y-32 scale-[1.02] shadow-[0_25px_60px_rgba(212,175,55,0.25)] z-20 opacity-100'
+                ? '-translate-y-32 sm:-translate-y-36 scale-[1.02] shadow-[0_25px_60px_rgba(212,175,55,0.3)] z-20 opacity-100'
                 : 'translate-y-1 z-0 opacity-0 pointer-events-none'
             }`}
           >
@@ -167,30 +167,37 @@ export const WaxSealIntro: React.FC<WaxSealIntroProps> = ({ onOpen }) => {
             <div className="absolute bottom-1.5 left-1.5 w-2.5 h-2.5 border-b border-l border-gold/80" />
             <div className="absolute bottom-1.5 right-1.5 w-2.5 h-2.5 border-b border-r border-gold/80" />
 
-            {/* Monogram Crest on Letter */}
-            <div className="relative inline-flex items-center justify-center my-1">
-              <div className="w-10 h-10 border border-gold/60 flex items-center justify-center rotate-45 bg-velvet shadow-sm">
-                <span className="-rotate-45 font-serif text-sm text-gold font-light tracking-widest">
-                  BP
-                </span>
+            {/* Gold Wedding Rings Medallion with Monogram */}
+            <div className="relative inline-flex items-center justify-center my-0.5">
+              <div className="w-14 h-14 sm:w-16 sm:h-16 rounded-full border-2 border-gold/70 overflow-hidden shadow-md relative">
+                <img
+                  src="/images/wedding-rings.jpg"
+                  alt="Wedding Rings"
+                  className="w-full h-full object-cover"
+                />
+                <div className="absolute inset-0 bg-velvet/40 flex items-center justify-center">
+                  <span className="font-serif text-xs sm:text-sm text-gold font-bold tracking-widest drop-shadow-md">
+                    BP
+                  </span>
+                </div>
               </div>
             </div>
 
-            <p className="text-[9px] uppercase tracking-widest text-gold font-semibold mt-1">
+            <p className="text-[10px] sm:text-xs uppercase tracking-widest text-gold font-semibold">
               {t('intro.title')}
             </p>
 
-            <h1 className="font-serif text-2xl sm:text-3xl text-champagne font-light tracking-wide my-1">
+            <h1 className="font-serif text-2xl sm:text-3xl text-gold-shimmer font-normal tracking-wide leading-tight">
               {t('intro.groomBrideNames')}
             </h1>
 
-            <p className="font-serif text-[11px] text-gold/80 tracking-widest uppercase mb-1">
+            <p className="font-serif text-xs sm:text-sm text-gold/90 tracking-widest uppercase">
               {t('intro.names')}
             </p>
 
-            <div className="hairline-gold w-24 mx-auto my-2" />
+            <div className="hairline-gold w-28 mx-auto my-1" />
 
-            <p className="text-[11px] text-champagne-muted font-light leading-relaxed max-w-xs mx-auto">
+            <p className="text-xs sm:text-sm text-champagne-muted font-light leading-relaxed max-w-xs mx-auto">
               {t('intro.hint')}
             </p>
           </div>
@@ -216,7 +223,7 @@ export const WaxSealIntro: React.FC<WaxSealIntroProps> = ({ onOpen }) => {
 
           {/* 4. 3D Top Triangular Flap (Hinged at the top, flips upwards -180deg) */}
           <div
-            className={`absolute top-0 left-0 right-0 h-[145px] sm:h-[160px] origin-top transition-transform duration-1000 ease-in-out preserve-3d ${
+            className={`absolute top-0 left-0 right-0 h-[155px] sm:h-[175px] origin-top transition-transform duration-1000 ease-in-out preserve-3d ${
               isFlapOpen
                 ? '-rotate-x-180 z-0'
                 : 'rotate-x-0 z-30'
@@ -252,25 +259,25 @@ export const WaxSealIntro: React.FC<WaxSealIntroProps> = ({ onOpen }) => {
 
           {/* 5. Physical 3D Gold Wax Seal Medallion (Interactive Touch Point) */}
           {!isFlapOpen && (
-            <div className="absolute left-1/2 top-[130px] sm:top-[142px] -translate-x-1/2 -translate-y-1/2 z-40">
+            <div className="absolute left-1/2 top-[140px] sm:top-[155px] -translate-x-1/2 -translate-y-1/2 z-40 flex items-center justify-center">
               <button
                 type="button"
                 onClick={handleOpenEnvelope}
-                className="group relative focus:outline-none focus:ring-2 focus:ring-gold/60 p-1 rounded-full transition-transform duration-300 hover:scale-110 active:scale-95"
+                className="group relative focus:outline-none focus:ring-2 focus:ring-gold/60 p-1.5 rounded-full transition-transform duration-300 hover:scale-110 active:scale-95 flex items-center justify-center"
                 aria-label={t('intro.button')}
               >
                 {/* Outer Breathing Gold Glow Aura */}
-                <span className="absolute -inset-2 rounded-full bg-gold/25 blur-md animate-seal-pulse pointer-events-none" />
+                <span className="absolute -inset-2.5 rounded-full bg-gold/30 blur-lg animate-seal-pulse pointer-events-none" />
 
                 {/* Wax Seal Medallion Stamp */}
-                <div className="relative w-16 h-16 sm:w-18 sm:h-18 rounded-full wax-seal-stamp flex items-center justify-center cursor-pointer transition-shadow">
+                <div className="relative w-16 h-16 sm:w-20 sm:h-20 aspect-square rounded-full shrink-0 wax-seal-stamp flex items-center justify-center cursor-pointer transition-shadow">
                   {/* Organic Stamped Wax Rim */}
                   <div className="absolute inset-1 rounded-full wax-seal-rim border border-amber-300/40 pointer-events-none" />
 
                   {/* Embossed Monogram */}
-                  <div className="flex flex-col items-center justify-center">
+                  <div className="flex flex-col items-center justify-center text-center">
                     <Sparkles className="w-3.5 h-3.5 text-void/80 mb-0.5 group-hover:rotate-45 transition-transform" />
-                    <span className="font-serif text-lg font-bold text-void tracking-widest drop-shadow-[0_1px_1px_rgba(255,255,255,0.4)]">
+                    <span className="font-serif text-lg sm:text-xl font-bold text-void tracking-wider select-none leading-none drop-shadow-[0_1px_1px_rgba(255,255,255,0.4)]">
                       BP
                     </span>
                   </div>
@@ -286,13 +293,13 @@ export const WaxSealIntro: React.FC<WaxSealIntroProps> = ({ onOpen }) => {
             type="button"
             onClick={handleOpenEnvelope}
             disabled={isOpenStage !== 'closed'}
-            className="group relative px-6 py-2.5 bg-gold-foil text-void font-sans text-xs uppercase tracking-widest font-bold border border-gold shadow-gold-glow transition-all duration-300 hover:scale-105 active:scale-95 flex items-center justify-center gap-2 mx-auto"
+            className="group relative px-8 py-3.5 bg-gold-foil text-void font-sans text-xs sm:text-sm uppercase tracking-widest font-bold border border-gold shadow-gold-glow transition-all duration-300 hover:scale-105 active:scale-95 flex items-center justify-center gap-2.5 mx-auto"
           >
-            <Sparkles className="w-3.5 h-3.5 text-void group-hover:rotate-45 transition-transform" />
+            <Sparkles className="w-4 h-4 text-void group-hover:rotate-45 transition-transform" />
             <span>{t('intro.button')}</span>
-            <Heart className="w-3 h-3 text-velvet fill-velvet" />
+            <Heart className="w-3.5 h-3.5 text-velvet fill-velvet" />
           </button>
-          <p className="text-[10px] text-champagne-muted/70 tracking-wider mt-2 font-sans">
+          <p className="text-xs text-champagne-muted/80 tracking-wider mt-2.5 font-sans">
             {t('intro.hint')}
           </p>
         </div>
