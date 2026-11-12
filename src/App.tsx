@@ -121,7 +121,7 @@ export const App: React.FC = () => {
 
       {/* Main Single-Page Journey */}
       <main className={`relative z-10 w-full overflow-x-hidden transition-opacity duration-1000 ${
-        isIntroOpen ? 'opacity-100' : 'opacity-0'
+        isIntroOpen ? 'opacity-100' : 'opacity-0 invisible pointer-events-none h-0 overflow-hidden'
       }`}>
         <HeroSection
           onNavigateToVenue={() => navigateToSection('venue')}

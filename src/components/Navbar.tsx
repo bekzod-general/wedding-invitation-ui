@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import { useTranslation } from 'react-i18next';
 import { Language } from '../data/weddingData';
 import { Volume2, VolumeX } from 'lucide-react';
@@ -20,6 +20,21 @@ export const Navbar: React.FC<NavbarProps> = ({
 }) => {
   const { t, i18n } = useTranslation();
   const currentLang = (i18n.language || propLanguage || 'uz') as Language;
+  const [scrollProgress, setScrollProgress] = useState(0);
+
+  useEffect(() => {
+    const handleScroll = () => {
+      const scrollHeight = document.documentElement.scrollHeight - window.innerHeight;
+      if (scrollHeight > 0) {
+        const progress = Math.min(100, Math.max(0, (window.scrollY / scrollHeight) * 100));
+        setScrollProgress(progress);
+      }
+    };
+
+    window.addEventListener('scroll', handleScroll, { passive: true });
+    handleScroll();
+    return () => window.removeEventListener('scroll', handleScroll);
+  }, []);
 
   const scrollTo = (id: string) => {
     const element = document.getElementById(id);
@@ -123,6 +138,13 @@ export const Navbar: React.FC<NavbarProps> = ({
           )}
         </div>
       </div>
+
+      {/* 1.5px Golden Journey Progress Line */}
+      <div
+        className="scroll-progress-line absolute bottom-0 left-0"
+        style={{ width: `${scrollProgress}%` }}
+        aria-hidden="true"
+      />
     </header>
   );
 };

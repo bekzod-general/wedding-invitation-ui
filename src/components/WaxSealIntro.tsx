@@ -153,8 +153,8 @@ export const WaxSealIntro: React.FC<WaxSealIntroProps> = ({ onOpen }) => {
           <div
             className={`absolute left-3 right-3 sm:left-4 sm:right-4 top-2 h-[245px] sm:h-[265px] bg-surface-container border border-gold/60 p-4 sm:p-5 text-center shadow-2xl transition-all duration-1000 ease-out preserve-3d ${
               isCardExtracted
-                ? '-translate-y-28 sm:-translate-y-32 scale-[1.02] shadow-[0_25px_60px_rgba(212,175,55,0.25)] z-20'
-                : 'translate-y-1 z-0'
+                ? '-translate-y-28 sm:-translate-y-32 scale-[1.02] shadow-[0_25px_60px_rgba(212,175,55,0.25)] z-20 opacity-100'
+                : 'translate-y-1 z-0 opacity-0 pointer-events-none'
             }`}
           >
             {/* Stationery Double Border Rule */}
@@ -199,24 +199,24 @@ export const WaxSealIntro: React.FC<WaxSealIntroProps> = ({ onOpen }) => {
           <div className="absolute inset-0 z-10 pointer-events-none overflow-hidden">
             {/* Left triangle flap */}
             <div
-              className="absolute left-0 bottom-0 top-0 w-1/2 bg-gradient-to-tr from-[#3D0F1D] to-[#260811] border-l border-b border-gold/30 shadow-md"
-              style={{ clipPath: 'polygon(0 0, 100% 100%, 0 100%)' }}
+              className="absolute left-0 bottom-0 top-0 w-1/2 bg-gradient-to-r from-[#3D0F1D] to-[#260811] border-l border-gold/30 shadow-md"
+              style={{ clipPath: 'polygon(0 0, 100% 50%, 0 100%)' }}
             />
             {/* Right triangle flap */}
             <div
-              className="absolute right-0 bottom-0 top-0 w-1/2 bg-gradient-to-tl from-[#3D0F1D] to-[#260811] border-r border-b border-gold/30 shadow-md"
-              style={{ clipPath: 'polygon(100% 0, 0 100%, 100% 100%)' }}
+              className="absolute right-0 bottom-0 top-0 w-1/2 bg-gradient-to-l from-[#3D0F1D] to-[#260811] border-r border-gold/30 shadow-md"
+              style={{ clipPath: 'polygon(100% 0, 0 50%, 100% 100%)' }}
             />
             {/* Bottom triangular pocket flap */}
             <div
-              className="absolute left-0 right-0 bottom-0 h-[140px] bg-gradient-to-t from-[#4A1525] to-[#2D0A15] border-b border-gold/45 shadow-[0_-8px_20px_rgba(0,0,0,0.6)]"
-              style={{ clipPath: 'polygon(0 100%, 50% 0%, 100% 100%)' }}
+              className="absolute left-0 right-0 bottom-0 h-full bg-gradient-to-t from-[#4A1525] to-[#2D0A15] border-b border-gold/45 shadow-[0_-8px_20px_rgba(0,0,0,0.6)]"
+              style={{ clipPath: 'polygon(0 100%, 50% 48%, 100% 100%)' }}
             />
           </div>
 
           {/* 4. 3D Top Triangular Flap (Hinged at the top, flips upwards -180deg) */}
           <div
-            className={`absolute top-0 left-0 right-0 h-[135px] sm:h-[150px] origin-top transition-transform duration-1000 ease-in-out preserve-3d ${
+            className={`absolute top-0 left-0 right-0 h-[145px] sm:h-[160px] origin-top transition-transform duration-1000 ease-in-out preserve-3d ${
               isFlapOpen
                 ? '-rotate-x-180 z-0'
                 : 'rotate-x-0 z-30'
@@ -252,7 +252,7 @@ export const WaxSealIntro: React.FC<WaxSealIntroProps> = ({ onOpen }) => {
 
           {/* 5. Physical 3D Gold Wax Seal Medallion (Interactive Touch Point) */}
           {!isFlapOpen && (
-            <div className="absolute left-1/2 top-[125px] sm:top-[138px] -translate-x-1/2 -translate-y-1/2 z-40">
+            <div className="absolute left-1/2 top-[130px] sm:top-[142px] -translate-x-1/2 -translate-y-1/2 z-40">
               <button
                 type="button"
                 onClick={handleOpenEnvelope}

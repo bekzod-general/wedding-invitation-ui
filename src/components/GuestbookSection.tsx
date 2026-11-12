@@ -3,6 +3,7 @@ import { useTranslation } from 'react-i18next';
 import confetti from 'canvas-confetti';
 import { Language, INITIAL_WISHES, Wish } from '../data/weddingData';
 import { useParallaxTilt } from '../hooks/useParallaxTilt';
+import { useScrollReveal } from '../hooks/useScrollReveal';
 import { Heart, Send, MessageCircle, Mic } from 'lucide-react';
 
 interface GuestbookSectionProps {
@@ -20,6 +21,11 @@ export const GuestbookSection: React.FC<GuestbookSectionProps> = () => {
   const [likedWishes, setLikedWishes] = useState<Record<string, boolean>>({});
 
   const formCardRef = useParallaxTilt<HTMLDivElement>({ maxRotation: 4, scale: 1.01 });
+
+  // Scroll Reveal triggers
+  const headerReveal = useScrollReveal<HTMLDivElement>({ threshold: 0.1 });
+  const formReveal = useScrollReveal<HTMLDivElement>({ threshold: 0.08 });
+  const wallReveal = useScrollReveal<HTMLDivElement>({ threshold: 0.06 });
 
   const relationshipOptions = [
     { id: 'groom', label: t('wishes.relGroom') },
@@ -151,32 +157,41 @@ export const GuestbookSection: React.FC<GuestbookSectionProps> = () => {
       className="relative py-16 px-4 sm:px-6 w-full overflow-x-hidden flex flex-col items-center"
     >
       <div className="w-full max-w-lg mx-auto">
-        {/* Section Header */}
-        <div className="text-center mb-8">
+        {/* Section Header with Scroll Reveal */}
+        <div
+          ref={headerReveal.ref}
+          className={`text-center mb-8 scroll-reveal ${
+            headerReveal.isRevealed ? 'is-revealed' : ''
+          }`}
+        >
           <div className="w-12 h-12 border border-gold/50 mx-auto mb-3 flex items-center justify-center bg-velvet/50 rotate-45 shadow-sm animate-float-gentle">
             <span className="-rotate-45 font-serif text-xl text-gold font-light tracking-widest">
               BP
             </span>
           </div>
 
-          <p className="text-[10px] uppercase tracking-widest text-gold font-mono font-semibold mb-1">
+          <p className="text-[10px] uppercase tracking-widest text-gold font-mono font-semibold mb-1 reveal-stagger-1">
             {t('wishes.badge')}
           </p>
 
-          <h2 className="font-serif text-2xl sm:text-3xl text-gold-shimmer font-normal tracking-wide mb-2">
+          <h2 className="font-serif text-2xl sm:text-3xl text-gold-shimmer font-normal tracking-wide mb-2 reveal-stagger-2">
             {t('wishes.title')}
           </h2>
 
-          <p className="text-xs text-champagne-muted font-light max-w-md mx-auto leading-relaxed">
+          <p className="text-xs text-champagne-muted font-light max-w-md mx-auto leading-relaxed reveal-stagger-3">
             {t('wishes.subtitle')}
           </p>
         </div>
 
-        {/* Wish Submission Form Card with 3D Parallax Tilt */}
+        {/* Wish Submission Form Card with Scroll Reveal & 3D Tilt */}
         <div
-          ref={formCardRef}
-          className="glass-card-elevated interactive-tilt p-5 sm:p-6 mb-8 relative overflow-hidden"
+          ref={formReveal.ref}
+          className={`scroll-reveal ${formReveal.isRevealed ? 'is-revealed' : ''}`}
         >
+          <div
+            ref={formCardRef}
+            className="glass-card-elevated interactive-tilt p-5 sm:p-6 mb-8 relative overflow-hidden"
+          >
           <div className="flex items-center justify-between mb-4 pb-2 border-b border-gold/20">
             <span className="text-xs uppercase tracking-widest text-gold font-bold">
               {t('wishes.boxTitle')}
@@ -292,9 +307,13 @@ export const GuestbookSection: React.FC<GuestbookSectionProps> = () => {
             </button>
           </div>
         </div>
+      </div>
 
-        {/* Wishes Display Wall */}
-        <div className="mb-8">
+        {/* Wishes Display Wall with Staggered Scroll Reveal */}
+        <div
+          ref={wallReveal.ref}
+          className={`mb-8 scroll-reveal ${wallReveal.isRevealed ? 'is-revealed' : ''}`}
+        >
           <div className="flex items-center justify-between mb-4 pb-2 border-b border-gold/20">
             <span className="text-xs uppercase tracking-widest text-gold font-bold">
               {t('wishes.wallTitle')}
@@ -305,12 +324,13 @@ export const GuestbookSection: React.FC<GuestbookSectionProps> = () => {
           </div>
 
           <div className="space-y-3">
-            {wishes.map((item) => {
+            {wishes.map((item, idx) => {
               const isLiked = likedWishes[item.id];
+              const staggerClass = idx === 0 ? 'reveal-stagger-1' : idx === 1 ? 'reveal-stagger-2' : idx === 2 ? 'reveal-stagger-3' : '';
               return (
                 <div
                   key={item.id}
-                  className="glass-card p-4 relative transition-all hover:border-gold/60 hover:scale-[1.008]"
+                  className={`glass-card p-4 relative transition-all hover:border-gold/60 hover:scale-[1.008] ${staggerClass}`}
                 >
                   <div className="flex items-start justify-between gap-3 mb-2">
                     {/* Author with Initials Badge */}

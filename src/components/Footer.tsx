@@ -1,6 +1,7 @@
 import React from 'react';
 import { useTranslation } from 'react-i18next';
 import { Language } from '../data/weddingData';
+import { useScrollReveal } from '../hooks/useScrollReveal';
 import { ChevronUp, Heart } from 'lucide-react';
 
 interface FooterProps {
@@ -9,6 +10,7 @@ interface FooterProps {
 
 export const Footer: React.FC<FooterProps> = () => {
   const { t } = useTranslation();
+  const footerReveal = useScrollReveal<HTMLDivElement>({ threshold: 0.1 });
 
   const scrollToTop = () => {
     window.scrollTo({ top: 0, behavior: 'smooth' });
@@ -16,7 +18,12 @@ export const Footer: React.FC<FooterProps> = () => {
 
   return (
     <footer className="relative py-12 px-4 border-t border-gold/25 bg-surface-lowest text-center w-full overflow-x-hidden">
-      <div className="max-w-md mx-auto space-y-4">
+      <div
+        ref={footerReveal.ref}
+        className={`max-w-md mx-auto space-y-4 scroll-reveal ${
+          footerReveal.isRevealed ? 'is-revealed' : ''
+        }`}
+      >
         {/* Back to top button */}
         <button
           onClick={scrollToTop}
