@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { Language, WEDDING_CONFIG } from '../data/weddingData';
+import { useParallaxTilt } from '../hooks/useParallaxTilt';
 import { MapPin, Navigation, Copy, Check, ExternalLink, Phone, Car } from 'lucide-react';
 
 interface VenueSectionProps {
@@ -11,6 +12,7 @@ export const VenueSection: React.FC<VenueSectionProps> = () => {
   const { t } = useTranslation();
   const [copied, setCopied] = useState(false);
   const [mapType, setMapType] = useState<'standard' | 'satellite'>('standard');
+  const venueCardRef = useParallaxTilt<HTMLDivElement>({ maxRotation: 4, scale: 1.01 });
 
   const handleCopyAddress = () => {
     navigator.clipboard.writeText(
@@ -39,14 +41,17 @@ export const VenueSection: React.FC<VenueSectionProps> = () => {
           </span>
         </div>
 
-        {/* Venue Title & Amenities Card */}
-        <div className="glass-card-elevated p-5 sm:p-6 mb-5 relative text-left">
+        {/* Venue Title & Amenities Card with 3D Parallax Tilt */}
+        <div
+          ref={venueCardRef}
+          className="glass-card-elevated interactive-tilt p-5 sm:p-6 mb-5 relative text-left overflow-hidden"
+        >
           <div className="flex items-center gap-1.5 text-[10px] uppercase tracking-wider text-gold font-sans font-semibold mb-1">
             <Car className="w-3.5 h-3.5 text-gold" />
             <span>{t('venue.badge')}</span>
           </div>
 
-          <h2 className="font-serif text-2xl sm:text-3xl text-champagne font-normal tracking-wide mb-1">
+          <h2 className="font-serif text-2xl sm:text-3xl text-gold-shimmer font-normal tracking-wide mb-1">
             {t('venue.name')}
           </h2>
 
@@ -58,8 +63,8 @@ export const VenueSection: React.FC<VenueSectionProps> = () => {
             "{t('venue.disclaimer')}"
           </p>
 
-          {/* Interactive Map Card */}
-          <div className="relative border border-gold/40 shadow-velvet-depth overflow-hidden bg-surface-lowest mb-5">
+          {/* Interactive Map Card with Golden Border Sheen */}
+          <div className="relative border border-gold/40 shadow-velvet-depth overflow-hidden bg-surface-lowest mb-5 transition-all hover:border-gold/70">
             {/* Map Header with Satellite / Standard Toggle */}
             <div className="bg-surface-high/90 px-3 py-1.5 border-b border-gold/25 flex items-center justify-between text-xs">
               <span className="text-champagne-muted font-sans text-[10px] uppercase tracking-wider">
@@ -68,20 +73,20 @@ export const VenueSection: React.FC<VenueSectionProps> = () => {
               <div className="flex items-center gap-1">
                 <button
                   onClick={() => setMapType('standard')}
-                  className={`px-2 py-0.5 text-[9px] uppercase tracking-wider border ${
+                  className={`px-2 py-0.5 text-[9px] uppercase tracking-wider border transition-all ${
                     mapType === 'standard'
-                      ? 'bg-velvet text-gold border-gold'
-                      : 'text-champagne-muted border-transparent'
+                      ? 'bg-velvet text-gold border-gold font-bold shadow-sm'
+                      : 'text-champagne-muted border-transparent hover:text-champagne'
                   }`}
                 >
                   {t('venue.mapModeStandard')}
                 </button>
                 <button
                   onClick={() => setMapType('satellite')}
-                  className={`px-2 py-0.5 text-[9px] uppercase tracking-wider border ${
+                  className={`px-2 py-0.5 text-[9px] uppercase tracking-wider border transition-all ${
                     mapType === 'satellite'
-                      ? 'bg-velvet text-gold border-gold'
-                      : 'text-champagne-muted border-transparent'
+                      ? 'bg-velvet text-gold border-gold font-bold shadow-sm'
+                      : 'text-champagne-muted border-transparent hover:text-champagne'
                   }`}
                 >
                   {t('venue.mapModeSatellite')}
@@ -122,7 +127,7 @@ export const VenueSection: React.FC<VenueSectionProps> = () => {
               href={WEDDING_CONFIG.venue.yandexGoUrl}
               target="_blank"
               rel="noopener noreferrer"
-              className="py-2.5 px-2 bg-surface/80 hover:bg-velvet text-champagne font-sans text-[10px] uppercase tracking-wider font-semibold border border-gold/40 hover:border-gold transition-all flex items-center justify-center gap-1 text-center truncate"
+              className="py-2.5 px-2 bg-surface/80 hover:bg-velvet text-champagne font-sans text-[10px] uppercase tracking-wider font-semibold border border-gold/40 hover:border-gold transition-all flex items-center justify-center gap-1 text-center truncate hover:scale-[1.02] active:scale-95"
               title={t('venue.btnYandexGo')}
             >
               <Navigation className="w-3 h-3 text-gold flex-shrink-0" />
@@ -133,7 +138,7 @@ export const VenueSection: React.FC<VenueSectionProps> = () => {
               href={WEDDING_CONFIG.venue.googleMapsUrl}
               target="_blank"
               rel="noopener noreferrer"
-              className="py-2.5 px-2 bg-surface/80 hover:bg-velvet text-champagne font-sans text-[10px] uppercase tracking-wider font-semibold border border-gold/40 hover:border-gold transition-all flex items-center justify-center gap-1 text-center truncate"
+              className="py-2.5 px-2 bg-surface/80 hover:bg-velvet text-champagne font-sans text-[10px] uppercase tracking-wider font-semibold border border-gold/40 hover:border-gold transition-all flex items-center justify-center gap-1 text-center truncate hover:scale-[1.02] active:scale-95"
             >
               <ExternalLink className="w-3 h-3 text-gold flex-shrink-0" />
               <span className="truncate">{t('venue.btnGoogle')}</span>
@@ -141,7 +146,7 @@ export const VenueSection: React.FC<VenueSectionProps> = () => {
 
             <button
               onClick={handleCopyAddress}
-              className="py-2.5 px-2 bg-surface/80 hover:bg-velvet text-champagne font-sans text-[10px] uppercase tracking-wider font-semibold border border-gold/40 hover:border-gold transition-all flex items-center justify-center gap-1 text-center truncate"
+              className="py-2.5 px-2 bg-surface/80 hover:bg-velvet text-champagne font-sans text-[10px] uppercase tracking-wider font-semibold border border-gold/40 hover:border-gold transition-all flex items-center justify-center gap-1 text-center truncate hover:scale-[1.02] active:scale-95"
             >
               {copied ? (
                 <>
@@ -159,7 +164,7 @@ export const VenueSection: React.FC<VenueSectionProps> = () => {
         </div>
 
         {/* Venue Administration / Coordinator Hotline Card */}
-        <div className="glass-card p-4 sm:p-5 text-center relative">
+        <div className="glass-card p-4 sm:p-5 text-center relative transition-all hover:border-gold/50">
           <div className="w-8 h-8 rounded-full bg-gold/15 border border-gold/40 flex items-center justify-center mx-auto mb-2 text-gold">
             <Phone className="w-4 h-4" />
           </div>
@@ -171,7 +176,7 @@ export const VenueSection: React.FC<VenueSectionProps> = () => {
           </p>
           <a
             href={`tel:${WEDDING_CONFIG.venue.organizerPhone.replace(/\s+/g, '')}`}
-            className="inline-flex items-center gap-2 px-5 py-2 bg-velvet/80 hover:bg-velvet border border-gold/50 text-gold text-xs font-mono font-semibold tracking-wider transition-all"
+            className="inline-flex items-center gap-2 px-5 py-2 bg-velvet/80 hover:bg-velvet border border-gold/50 text-gold text-xs font-mono font-semibold tracking-wider transition-all hover:scale-105 active:scale-95"
           >
             <Phone className="w-3.5 h-3.5 text-gold" />
             <span>{WEDDING_CONFIG.venue.organizerPhone}</span>

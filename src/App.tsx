@@ -15,6 +15,18 @@ export const App: React.FC = () => {
   const [activeSection, setActiveSection] = useState('hero');
   const audioRef = useRef<HTMLAudioElement | null>(null);
 
+  // Lock body scroll while envelope is active
+  useEffect(() => {
+    if (!isIntroOpen) {
+      document.body.style.overflow = 'hidden';
+    } else {
+      document.body.style.overflow = '';
+    }
+    return () => {
+      document.body.style.overflow = '';
+    };
+  }, [isIntroOpen]);
+
   // Initialize audio element
   useEffect(() => {
     const audio = new Audio(WEDDING_CONFIG.audioUrl);
@@ -58,6 +70,8 @@ export const App: React.FC = () => {
 
   // Scroll spy to update active nav section
   useEffect(() => {
+    if (!isIntroOpen) return;
+
     const handleScroll = () => {
       const sections = ['hero', 'venue', 'wishes'];
       const scrollPosition = window.scrollY + 200;
@@ -77,7 +91,7 @@ export const App: React.FC = () => {
 
     window.addEventListener('scroll', handleScroll);
     return () => window.removeEventListener('scroll', handleScroll);
-  }, []);
+  }, [isIntroOpen]);
 
   const navigateToSection = (sectionId: string) => {
     const el = document.getElementById(sectionId);
@@ -96,15 +110,19 @@ export const App: React.FC = () => {
         <WaxSealIntro onOpen={handleOpenIntro} />
       )}
 
-      {/* Top Navigation Bar */}
-      <Navbar
-        activeSection={activeSection}
-        isPlayingAudio={isPlayingAudio}
-        onToggleAudio={toggleAudio}
-      />
+      {/* Top Navigation Bar - Fades in only after envelope unsealing */}
+      {isIntroOpen && (
+        <Navbar
+          activeSection={activeSection}
+          isPlayingAudio={isPlayingAudio}
+          onToggleAudio={toggleAudio}
+        />
+      )}
 
       {/* Main Single-Page Journey */}
-      <main className="relative z-10 w-full overflow-x-hidden">
+      <main className={`relative z-10 w-full overflow-x-hidden transition-opacity duration-1000 ${
+        isIntroOpen ? 'opacity-100' : 'opacity-0'
+      }`}>
         <HeroSection
           onNavigateToVenue={() => navigateToSection('venue')}
           isPlayingAudio={isPlayingAudio}
@@ -117,13 +135,15 @@ export const App: React.FC = () => {
       </main>
 
       {/* Footer */}
-      <Footer />
+      {isIntroOpen && <Footer />}
 
-      {/* Sticky Bottom Navigation Bar matching Stitch Mockup */}
-      <BottomNav
-        activeSection={activeSection}
-        onNavigate={navigateToSection}
-      />
+      {/* Sticky Bottom Navigation Bar - Fades in only after envelope unsealing */}
+      {isIntroOpen && (
+        <BottomNav
+          activeSection={activeSection}
+          onNavigate={navigateToSection}
+        />
+      )}
     </div>
   );
 };

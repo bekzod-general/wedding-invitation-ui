@@ -1,6 +1,8 @@
 import React, { useState, useEffect } from 'react';
 import { useTranslation } from 'react-i18next';
+import confetti from 'canvas-confetti';
 import { Language, INITIAL_WISHES, Wish } from '../data/weddingData';
+import { useParallaxTilt } from '../hooks/useParallaxTilt';
 import { Heart, Send, MessageCircle, Mic } from 'lucide-react';
 
 interface GuestbookSectionProps {
@@ -16,6 +18,8 @@ export const GuestbookSection: React.FC<GuestbookSectionProps> = () => {
   const [message, setMessage] = useState('');
   const [virtualGift, setVirtualGift] = useState('💍');
   const [likedWishes, setLikedWishes] = useState<Record<string, boolean>>({});
+
+  const formCardRef = useParallaxTilt<HTMLDivElement>({ maxRotation: 4, scale: 1.01 });
 
   const relationshipOptions = [
     { id: 'groom', label: t('wishes.relGroom') },
@@ -104,6 +108,17 @@ export const GuestbookSection: React.FC<GuestbookSectionProps> = () => {
       console.error('Could not save wish', e);
     }
 
+    // Celebration Confetti burst
+    confetti({
+      particleCount: 55,
+      spread: 75,
+      origin: { y: 0.7 },
+      colors: ['#D4AF37', '#F7E7CE', '#E5C158', '#FF6B8B'],
+      shapes: ['star', 'circle'],
+      ticks: 200,
+      zIndex: 9999,
+    });
+
     setName('');
     setMessage('');
   };
@@ -138,7 +153,7 @@ export const GuestbookSection: React.FC<GuestbookSectionProps> = () => {
       <div className="w-full max-w-lg mx-auto">
         {/* Section Header */}
         <div className="text-center mb-8">
-          <div className="w-12 h-12 border border-gold/50 mx-auto mb-3 flex items-center justify-center bg-velvet/50 rotate-45 shadow-sm">
+          <div className="w-12 h-12 border border-gold/50 mx-auto mb-3 flex items-center justify-center bg-velvet/50 rotate-45 shadow-sm animate-float-gentle">
             <span className="-rotate-45 font-serif text-xl text-gold font-light tracking-widest">
               BP
             </span>
@@ -148,7 +163,7 @@ export const GuestbookSection: React.FC<GuestbookSectionProps> = () => {
             {t('wishes.badge')}
           </p>
 
-          <h2 className="font-serif text-2xl sm:text-3xl text-champagne font-normal tracking-wide mb-2">
+          <h2 className="font-serif text-2xl sm:text-3xl text-gold-shimmer font-normal tracking-wide mb-2">
             {t('wishes.title')}
           </h2>
 
@@ -157,8 +172,11 @@ export const GuestbookSection: React.FC<GuestbookSectionProps> = () => {
           </p>
         </div>
 
-        {/* Wish Submission Form Card: Tilak Yo'llash */}
-        <div className="glass-card-elevated p-5 sm:p-6 mb-8 relative">
+        {/* Wish Submission Form Card with 3D Parallax Tilt */}
+        <div
+          ref={formCardRef}
+          className="glass-card-elevated interactive-tilt p-5 sm:p-6 mb-8 relative overflow-hidden"
+        >
           <div className="flex items-center justify-between mb-4 pb-2 border-b border-gold/20">
             <span className="text-xs uppercase tracking-widest text-gold font-bold">
               {t('wishes.boxTitle')}
@@ -199,7 +217,7 @@ export const GuestbookSection: React.FC<GuestbookSectionProps> = () => {
                       onClick={() => setRelationship(opt.id)}
                       className={`py-1.5 px-2 text-[10px] uppercase tracking-wider border transition-all text-center truncate ${
                         isSelected
-                          ? 'bg-velvet border-gold text-gold font-semibold shadow-gold-subtle'
+                          ? 'bg-velvet border-gold text-gold font-semibold shadow-gold-subtle scale-[1.02]'
                           : 'bg-surface-lowest/70 text-champagne-muted border-gold/25 hover:border-gold/50'
                       }`}
                     >
@@ -243,7 +261,7 @@ export const GuestbookSection: React.FC<GuestbookSectionProps> = () => {
                     onClick={() => setVirtualGift(gift)}
                     className={`text-xl p-1.5 transition-all ${
                       virtualGift === gift
-                        ? 'scale-125 bg-velvet border border-gold'
+                        ? 'scale-125 bg-velvet border border-gold shadow-gold-subtle'
                         : 'opacity-70 hover:opacity-100 hover:scale-110'
                     }`}
                   >
@@ -267,7 +285,7 @@ export const GuestbookSection: React.FC<GuestbookSectionProps> = () => {
           <div className="mt-3 pt-3 border-t border-gold/15">
             <button
               type="button"
-              className="w-full py-2.5 px-3 bg-velvet/40 border border-gold/30 text-champagne-muted hover:text-gold text-xs flex items-center justify-center gap-2 transition-all group"
+              className="w-full py-2.5 px-3 bg-velvet/40 border border-gold/30 text-champagne-muted hover:text-gold text-xs flex items-center justify-center gap-2 transition-all group hover:scale-[1.01] active:scale-95"
             >
               <Mic className="w-3.5 h-3.5 text-gold group-hover:scale-110 transition-transform" />
               <span>{t('wishes.voiceTeaser')}</span>
@@ -292,12 +310,12 @@ export const GuestbookSection: React.FC<GuestbookSectionProps> = () => {
               return (
                 <div
                   key={item.id}
-                  className="glass-card p-4 relative transition-colors hover:border-gold/60"
+                  className="glass-card p-4 relative transition-all hover:border-gold/60 hover:scale-[1.008]"
                 >
                   <div className="flex items-start justify-between gap-3 mb-2">
                     {/* Author with Initials Badge */}
                     <div className="flex items-center gap-2.5">
-                      <div className="w-9 h-9 border border-gold/50 bg-velvet flex items-center justify-center font-serif text-xs text-gold font-bold flex-shrink-0">
+                      <div className="w-9 h-9 border border-gold/50 bg-velvet flex items-center justify-center font-serif text-xs text-gold font-bold flex-shrink-0 shadow-sm">
                         {item.initials || 'BP'}
                       </div>
                       <div>
@@ -324,15 +342,15 @@ export const GuestbookSection: React.FC<GuestbookSectionProps> = () => {
                   <div className="flex items-center justify-end">
                     <button
                       onClick={() => handleToggleHeart(item.id)}
-                      className={`inline-flex items-center gap-1.5 px-2.5 py-1 text-xs border transition-all ${
+                      className={`inline-flex items-center gap-1.5 px-2.5 py-1 text-xs border transition-all active:scale-90 ${
                         isLiked
-                          ? 'bg-velvet border-gold text-gold shadow-gold-subtle'
+                          ? 'bg-velvet border-gold text-gold shadow-gold-subtle scale-105'
                           : 'bg-surface-lowest/60 border-gold/25 text-champagne-muted hover:border-gold/50'
                       }`}
                     >
                       <Heart
-                        className={`w-3 h-3 ${
-                          isLiked ? 'text-gold fill-gold' : 'text-champagne-muted'
+                        className={`w-3.5 h-3.5 transition-transform ${
+                          isLiked ? 'text-gold fill-gold scale-110' : 'text-champagne-muted'
                         }`}
                       />
                       <span className="text-[11px] font-mono">{item.hearts}</span>

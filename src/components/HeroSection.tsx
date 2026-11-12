@@ -6,6 +6,7 @@ import {
   getGoogleCalendarUrl,
   downloadIcsFile,
 } from '../data/weddingData';
+import { useParallaxTilt } from '../hooks/useParallaxTilt';
 import {
   Calendar,
   ChevronDown,
@@ -38,6 +39,11 @@ export const HeroSection: React.FC<HeroSectionProps> = ({
   const { t, i18n } = useTranslation();
   const currentLang = (i18n.language || 'uz') as Language;
   const [showCalendarOptions, setShowCalendarOptions] = useState(false);
+
+  // 3D Parallax Tilt for Cards
+  const invitationCardRef = useParallaxTilt<HTMLDivElement>({ maxRotation: 5, scale: 1.01 });
+  const countdownCardRef = useParallaxTilt<HTMLDivElement>({ maxRotation: 5, scale: 1.01 });
+  const teaserCardRef = useParallaxTilt<HTMLDivElement>({ maxRotation: 5, scale: 1.01 });
 
   // Live Countdown state
   const [timeLeft, setTimeLeft] = useState<TimeLeft>({
@@ -86,11 +92,11 @@ export const HeroSection: React.FC<HeroSectionProps> = ({
       <div className="absolute top-1/4 left-1/2 -translate-x-1/2 -translate-y-1/2 w-80 sm:w-96 h-80 sm:h-96 bg-velvet/30 rounded-full blur-[100px] pointer-events-none" />
 
       <div className="w-full max-w-lg mx-auto text-center relative z-10 flex flex-col items-center">
-        {/* Monogram Crest with Ring Frame */}
-        <div className="relative inline-flex items-center justify-center my-2">
-          <div className="w-20 h-20 sm:w-24 sm:h-24 border border-gold/60 flex flex-col items-center justify-center bg-velvet/50 shadow-velvet-depth relative">
+        {/* Monogram Crest with Ring Frame and Floating Aura */}
+        <div className="relative inline-flex items-center justify-center my-2 animate-float-gentle">
+          <div className="w-20 h-20 sm:w-24 sm:h-24 border border-gold/60 flex flex-col items-center justify-center bg-velvet/50 shadow-velvet-depth relative group">
             <div className="absolute inset-1.5 border border-gold/30 pointer-events-none" />
-            <span className="font-serif text-2xl sm:text-3xl text-gold font-light tracking-widest">
+            <span className="font-serif text-2xl sm:text-3xl text-gold font-light tracking-widest drop-shadow-[0_2px_8px_rgba(212,175,55,0.4)]">
               BP
             </span>
             <span className="text-[8px] uppercase tracking-widest text-champagne-muted font-sans mt-0.5">
@@ -104,8 +110,8 @@ export const HeroSection: React.FC<HeroSectionProps> = ({
           {t('hero.city_badge')}
         </p>
 
-        {/* Couple Names in Bodoni Moda */}
-        <h1 className="font-serif text-4xl sm:text-5xl text-champagne font-normal tracking-tight leading-none mb-1">
+        {/* Couple Names in Bodoni Moda with Metallic Gold Shimmer */}
+        <h1 className="font-serif text-4xl sm:text-5xl font-normal tracking-tight leading-none mb-1 text-gold-shimmer drop-shadow-sm">
           <span>{t('hero.groom')}</span>
           <span className="text-gold font-serif italic mx-2.5 sm:mx-3 font-normal">
             &amp;
@@ -132,8 +138,11 @@ export const HeroSection: React.FC<HeroSectionProps> = ({
           </p>
         </div>
 
-        {/* Formal Invitation Card */}
-        <div className="w-full glass-card-elevated p-5 sm:p-6 mb-6 text-left relative">
+        {/* Formal Invitation Card with 3D Parallax Tilt */}
+        <div
+          ref={invitationCardRef}
+          className="w-full glass-card-elevated interactive-tilt p-5 sm:p-6 mb-6 text-left relative overflow-hidden"
+        >
           <div className="absolute top-2 left-2 w-2 h-2 border-t border-l border-gold/60" />
           <div className="absolute top-2 right-2 w-2 h-2 border-t border-r border-gold/60" />
           <div className="absolute bottom-2 left-2 w-2 h-2 border-b border-l border-gold/60" />
@@ -160,8 +169,11 @@ export const HeroSection: React.FC<HeroSectionProps> = ({
           </div>
         </div>
 
-        {/* Live Countdown Timer */}
-        <div className="w-full glass-card p-4 sm:p-5 mb-5 relative">
+        {/* Live Countdown Timer Card with 3D Parallax Tilt */}
+        <div
+          ref={countdownCardRef}
+          className="w-full glass-card interactive-tilt p-4 sm:p-5 mb-5 relative overflow-hidden"
+        >
           <p className="text-[10px] uppercase tracking-widest text-champagne-muted font-sans mb-3 text-center">
             {t('hero.countdown_title')}
           </p>
@@ -228,7 +240,7 @@ export const HeroSection: React.FC<HeroSectionProps> = ({
           <div className="flex items-center gap-2.5 text-left overflow-hidden">
             <button
               onClick={onToggleAudio}
-              className="w-7 h-7 rounded-none bg-gold-foil text-void flex items-center justify-center flex-shrink-0 shadow-sm"
+              className="w-7 h-7 rounded-none bg-gold-foil text-void flex items-center justify-center flex-shrink-0 shadow-sm transition-transform hover:scale-105 active:scale-95"
               aria-label={isPlayingAudio ? t('audio.pauseAria') : t('audio.playAria')}
             >
               {isPlayingAudio ? (
@@ -266,8 +278,11 @@ export const HeroSection: React.FC<HeroSectionProps> = ({
           </p>
         </div>
 
-        {/* Banquet Hall Teaser Card */}
-        <div className="w-full glass-card-elevated p-4 sm:p-5 mb-6 text-left relative">
+        {/* Banquet Hall Teaser Card with 3D Parallax Tilt */}
+        <div
+          ref={teaserCardRef}
+          className="w-full glass-card-elevated interactive-tilt p-4 sm:p-5 mb-6 text-left relative overflow-hidden"
+        >
           <div className="flex items-center justify-between text-[10px] uppercase tracking-wider text-gold mb-1">
             <span>{t('hero.venueTeaserTitle')}</span>
             <span className="px-1.5 py-0.5 bg-velvet border border-gold/40 text-[9px]">
@@ -282,7 +297,7 @@ export const HeroSection: React.FC<HeroSectionProps> = ({
           </p>
           <button
             onClick={scrollToVenue}
-            className="w-full py-2 bg-velvet/80 hover:bg-velvet border border-gold/50 text-gold text-xs uppercase tracking-widest font-semibold flex items-center justify-center gap-2 transition-all"
+            className="w-full py-2 bg-velvet/80 hover:bg-velvet border border-gold/50 text-gold text-xs uppercase tracking-widest font-semibold flex items-center justify-center gap-2 transition-all hover:scale-[1.01] active:scale-95"
           >
             <MapPin className="w-3.5 h-3.5 text-gold" />
             <span>{t('hero.viewOnMap')}</span>
