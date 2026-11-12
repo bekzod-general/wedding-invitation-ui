@@ -5,9 +5,7 @@ import { WaxSealIntro } from './components/WaxSealIntro';
 import { Navbar } from './components/Navbar';
 import { BottomNav } from './components/BottomNav';
 import { HeroSection } from './components/HeroSection';
-import { ScheduleSection } from './components/ScheduleSection';
 import { VenueSection } from './components/VenueSection';
-import { RsvpSection } from './components/RsvpSection';
 import { GuestbookSection } from './components/GuestbookSection';
 import { Footer } from './components/Footer';
 
@@ -62,7 +60,7 @@ export const App: React.FC = () => {
   // Scroll spy to update active nav section
   useEffect(() => {
     const handleScroll = () => {
-      const sections = ['hero', 'schedule', 'venue', 'rsvp', 'wishes'];
+      const sections = ['hero', 'venue', 'wishes'];
       const scrollPosition = window.scrollY + 200;
 
       for (const sectionId of sections) {
@@ -112,16 +110,12 @@ export const App: React.FC = () => {
       <main className="relative z-10 w-full overflow-x-hidden">
         <HeroSection
           language={language}
-          onNavigateToRsvp={() => navigateToSection('rsvp')}
+          onNavigateToVenue={() => navigateToSection('venue')}
           isPlayingAudio={isPlayingAudio}
           onToggleAudio={toggleAudio}
         />
         <div className="hairline-gold max-w-lg mx-auto my-4" />
-        <ScheduleSection language={language} />
-        <div className="hairline-gold max-w-lg mx-auto my-4" />
         <VenueSection language={language} />
-        <div className="hairline-gold max-w-lg mx-auto my-4" />
-        <RsvpSection language={language} />
         <div className="hairline-gold max-w-lg mx-auto my-4" />
         <GuestbookSection language={language} />
       </main>

@@ -18,7 +18,7 @@ import {
 
 interface HeroSectionProps {
   language: Language;
-  onNavigateToRsvp: () => void;
+  onNavigateToVenue: () => void;
   isPlayingAudio?: boolean;
   onToggleAudio?: () => void;
 }
@@ -32,7 +32,7 @@ interface TimeLeft {
 
 export const HeroSection: React.FC<HeroSectionProps> = ({
   language,
-  onNavigateToRsvp,
+  onNavigateToVenue,
   isPlayingAudio,
   onToggleAudio,
 }) => {
@@ -144,7 +144,7 @@ export const HeroSection: React.FC<HeroSectionProps> = ({
             BP
           </div>
 
-          <div className="relative z-10">
+          <div className="relative z-10  text-center">
             <h3 className="font-serif text-base sm:text-lg text-champagne font-medium mb-2">
               {t('hero.invitation_dear')}
             </h3>
@@ -289,12 +289,13 @@ export const HeroSection: React.FC<HeroSectionProps> = ({
           </button>
         </div>
 
-        {/* Primary RSVP Action Button */}
+        {/* Primary Venue Action Button */}
         <button
-          onClick={onNavigateToRsvp}
+          onClick={onNavigateToVenue}
           className="w-full py-3.5 bg-gold-foil text-void font-sans text-xs uppercase tracking-widest font-bold border border-gold shadow-gold-glow hover:scale-[1.01] active:scale-95 transition-all flex items-center justify-center gap-2"
         >
-          <span>TASHRIFNI TASDIQLASH (RSVP)</span>
+          <MapPin className="w-4 h-4 text-void" />
+          <span>{t('hero.viewVenue')}</span>
         </button>
       </div>
     </section>

@@ -27,12 +27,8 @@ export const Navbar: React.FC<NavbarProps> = ({
 
   const getSectionTitle = () => {
     switch (activeSection) {
-      case 'schedule':
-        return language === 'ru' ? 'STORY & ITINERARY' : 'DASTUR VA VAQTLAR';
       case 'venue':
         return language === 'ru' ? 'LOCATION & VENUE' : 'TO\'YXONA MANZILI';
-      case 'rsvp':
-        return 'RSVP PORTAL';
       case 'wishes':
         return language === 'ru' ? 'WISHES & GUESTBOOK' : 'EZGU TILAKLAR';
       default:

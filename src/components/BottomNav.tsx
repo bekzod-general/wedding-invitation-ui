@@ -1,6 +1,6 @@
 import React from 'react';
 import { Language, TRANSLATIONS } from '../data/weddingData';
-import { Heart, Clock, CheckSquare, MessageSquare } from 'lucide-react';
+import { Heart, MapPin, MessageSquare } from 'lucide-react';
 
 interface BottomNavProps {
   language: Language;
@@ -23,16 +23,10 @@ export const BottomNav: React.FC<BottomNavProps> = ({
       icon: Heart,
     },
     {
-      id: 'schedule',
-      label: language === 'ru' ? 'STORY' : language === 'uz' ? 'DASTUR' : 'STORY',
-      sublabel: t('nav.schedule'),
-      icon: Clock,
-    },
-    {
-      id: 'rsvp',
-      label: 'RSVP',
-      sublabel: t('nav.rsvp'),
-      icon: CheckSquare,
+      id: 'venue',
+      label: language === 'ru' ? 'VENUE' : language === 'uz' ? 'MANZIL' : 'VENUE',
+      sublabel: t('nav.venue'),
+      icon: MapPin,
     },
     {
       id: 'wishes',
@@ -47,11 +41,9 @@ export const BottomNav: React.FC<BottomNavProps> = ({
       className="fixed bottom-0 left-0 right-0 z-40 bg-surface-lowest/95 backdrop-blur-md border-t border-gold/30 px-2 py-1.5 transition-all shadow-[0_-4px_20px_rgba(0,0,0,0.6)]"
       aria-label="Mobile navigation"
     >
-      <div className="max-w-md mx-auto grid grid-cols-4 gap-1">
+      <div className="max-w-md mx-auto grid grid-cols-3 gap-1">
         {items.map((item) => {
-          const isActive =
-            activeSection === item.id ||
-            (item.id === 'schedule' && activeSection === 'venue');
+          const isActive = activeSection === item.id;
           const IconComponent = item.icon;
 
           return (

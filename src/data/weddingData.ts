@@ -1,14 +1,5 @@
 export type Language = 'uz' | 'ru' | 'en';
 
-export interface ScheduleEvent {
-  time: string;
-  badgeKey: string;
-  titleKey: string;
-  descriptionKey: string;
-  iconName: 'camera' | 'heart' | 'sparkles' | 'music' | 'cake';
-  imageUrl?: string;
-}
-
 export interface Wish {
   id: string;
   name: string;
@@ -49,50 +40,16 @@ export const WEDDING_CONFIG = {
     yandexMapsUrl: 'https://yandex.uz/maps/-/CXqJnWoO',
     googleMapsUrl: 'https://www.google.com/maps/dir/?api=1&destination=39.740825,64.433365',
     organizerPhone: '+998 (93) 687-08-50',
-    organizerTelegram: 'https://t.me/wedding_organizer',
+    organizerTelegram: 'https://t.me/bekzodmurotboyev',
   },
-  audioUrl: 'https://cdn.pixabay.com/download/audio/2022/05/16/audio_c97693cf63.mp3?filename=romantic-piano-wedding-love-112191.mp3',
-  schedule: [
-    {
-      time: '18:00',
-      badgeKey: 'schedule.badge.welcome',
-      titleKey: 'schedule.photoshoot.title',
-      descriptionKey: 'schedule.photoshoot.desc',
-      iconName: 'camera',
-      imageUrl: 'https://images.unsplash.com/photo-1519741497674-611481863552?auto=format&fit=crop&w=800&q=80',
-    },
-    {
-      time: '19:00',
-      badgeKey: 'schedule.badge.banquet',
-      titleKey: 'schedule.banquet.title',
-      descriptionKey: 'schedule.banquet.desc',
-      iconName: 'sparkles',
-    },
-    {
-      time: '20:30',
-      badgeKey: 'schedule.badge.dance',
-      titleKey: 'schedule.waltz.title',
-      descriptionKey: 'schedule.waltz.desc',
-      iconName: 'music',
-      imageUrl: 'https://images.unsplash.com/photo-1511285560929-80b456fea0bc?auto=format&fit=crop&w=800&q=80',
-    },
-    {
-      time: '22:00',
-      badgeKey: 'schedule.badge.finale',
-      titleKey: 'schedule.cake.title',
-      descriptionKey: 'schedule.cake.desc',
-      iconName: 'cake',
-    },
-  ] as ScheduleEvent[],
+  audioUrl: '/audio/dunyadan-uzak.mp3',
 };
 
 export const TRANSLATIONS: Record<Language, Record<string, string>> = {
   uz: {
     // Nav
     'nav.invitation': 'Taklifnoma',
-    'nav.schedule': 'Dastur',
     'nav.venue': 'Manzil',
-    'nav.rsvp': 'RSVP',
     'nav.wishes': 'Ezgu Tilaklar',
 
     // Wax seal intro
@@ -107,7 +64,7 @@ export const TRANSLATIONS: Record<Language, Record<string, string>> = {
     'hero.subheading': 'Ikki qalbning muqaddas rishtasi',
     'hero.city_badge': 'TO\'Y TANTANASI • BUXORO',
     'hero.names_sub': 'MUROTBOYEV • QOSIMOVA',
-    'hero.blessing_quote': '«Push союз двух сердец, благословенный Всевышним, будет полон мира, изобилия и вечной любви»',
+    'hero.blessing_quote': '«Qodir Tangrining marhamati bilan ikki qalbning birlashishi tinchlik, mo\'l-ko\'lchilik va abadiy sevgiga to\'la bo\'lsin.»',
     'hero.invitation_dear': 'Hurmatli va Aziz Mehmonimiz!',
     'hero.invitation_text': 'Sizni hayotimizdagi eng quvonchli va unutilmas kunimiz — nikoh to\'yimiz munosabati bilan yoziladigan dasturxonimizga lutfan taklif etamiz. Tashrifingiz to\'yimizning eng go\'zal ko\'rki bo\'ladi.',
     'hero.family_hosts': 'Saidovlar va Xidirovlar xonadonlari',
@@ -122,36 +79,9 @@ export const TRANSLATIONS: Record<Language, Record<string, string>> = {
     'hero.addToCalendar': 'Taqvimga Saqlash',
     'hero.calendarGoogle': 'Google Calendar',
     'hero.calendarIcs': 'Apple / Outlook (.ics)',
-    'hero.audio_playing': 'Yulduz Usmonova — Romantic Wedding',
+    'hero.viewVenue': 'To\'yxona Manzilini Ko\'rish',
+    'hero.audio_playing': 'Rustam Fayziyev — Dunyadan Uzak',
     'hero.audio_live': 'LIVE',
-
-    // Schedule
-    'schedule.badge': 'TANTANALAR DASTURI',
-    'schedule.title': 'To\'y Tartibi va Vaqtlari',
-    'schedule.steps': '4 BOSQICH',
-    'schedule.subtitle': 'Har bir daqiqasi unutilmas xotiralarga boy tantanamiz jadvali',
-    'schedule.badge.welcome': 'KUTIB OLISH',
-    'schedule.photoshoot.title': 'Kelin-Kuyov Tashrifi va Fotosessiya',
-    'schedule.photoshoot.desc': 'Mehmonlarni kutib olish, jonli simfonik kuy sadolari va qizil gilam fotosessiyasi.',
-    'schedule.badge.banquet': 'ZIYOFAT',
-    'schedule.banquet.title': 'Tantanali Nikoh va Oqshom Ochilishi',
-    'schedule.banquet.desc': 'Nafis to\'yxona dasturxoni, shohona milliy va yevropa taomlari taqdimoti hamda bayramona konsert.',
-    'schedule.badge.dance': 'SEHRLI LAHZA',
-    'schedule.waltz.title': 'Kuyov va Kelinning Ilk Raqsi',
-    'schedule.waltz.desc': 'Yengil oq tutun va yulduzlar yog\'dusi ostida yoshlarning ilk sehrli valsi.',
-    'schedule.badge.finale': 'XOTIMA',
-    'schedule.cake.title': 'To\'y Torti va Mushakbozlik',
-    'schedule.cake.desc': 'Ko\'p qavatli tantanali shirinlik kesish odati hamda tungi osmonda feyyerverk mushaklari.',
-
-    // Dress Code
-    'dresscode.title': 'Kiyinish Madaniyati (Dress Code)',
-    'dresscode.subtitle': 'Black Tie & Elegant Evening Attire',
-    'dresscode.desc': 'Oqshom liboslari va nafis ranglar. Mehmonlarimizdan to\'y muhitiga mos keluvchi tantanali liboslarda tashrif buyurishlarini iltimos qilamiz.',
-    'dresscode.colorsTitle': 'Tavsiya etilgan ranglar palitrasi:',
-    'dresscode.cChampagne': 'Shampan',
-    'dresscode.cSage': 'Sage Yashil',
-    'dresscode.cGold': 'Zarhal Oltin',
-    'dresscode.cWine': 'To\'q May Rang',
 
     // Venue
     'venue.title': 'To\'yxona Manzili',
@@ -168,37 +98,6 @@ export const TRANSLATIONS: Record<Language, Record<string, string>> = {
     'venue.adminTitle': 'Havas Premium Ma\'muriyati',
     'venue.adminDesc': 'Manzil yoki tashrif bo\'yicha qiyinchilik tug\'ilsa, marosim ma\'murlariga bog\'laning',
     'venue.callAdmin': '+998 (93) 687-08-50',
-
-    // RSVP
-    'rsvp.headerBadge': 'RSVP ANKETA',
-    'rsvp.title': 'Tashrifni Tasdiqlash',
-    'rsvp.subtitle': 'Saidovlar va Xidirovlar xonadonlari barcha aziz mehmonlarni orziqib kutadi',
-    'rsvp.name': 'Ism va familiyangiz *',
-    'rsvp.namePlaceholder': 'Masalan: Sardor Aliyev',
-    'rsvp.phone': 'Telefon raqamingiz *',
-    'rsvp.phonePlaceholder': '+998 90 123-45-67',
-    'rsvp.guestsCount': 'Mehmonlar soni:',
-    'rsvp.person': 'Kishi',
-    'rsvp.attendance': 'Tashrif holati:',
-    'rsvp.attendingYes': '✓ Jon deb qatnashaman! (Ha)',
-    'rsvp.attendingNo': '✗ Afsuski, qatnasha olmayman (Sababli)',
-    'rsvp.diet': 'Ta\'m va menyudagi afzalliklar:',
-    'rsvp.dietNational': 'Milliy taomlar',
-    'rsvp.dietHalal': 'Halol go\'sht',
-    'rsvp.dietVeg': 'Vegetarian',
-    'rsvp.dietKids': 'Bolalar menyusi',
-    'rsvp.songRequest': 'DJ uchun maxsus taronangiz:',
-    'rsvp.songPlaceholder': 'Masalan: Yulduz Usmonova - Muhabbat...',
-    'rsvp.notes': 'Kelinchak va kuyovga iliq tilaklar:',
-    'rsvp.notesPlaceholder': 'Oq yo\'l va cheksiz baxt tilaymiz...',
-    'rsvp.submit': 'Tashrifni Tasdiqlash',
-    'rsvp.submitting': 'Tasdiqlanmoqda...',
-    'rsvp.successTitle': 'Katta Rahmat!',
-    'rsvp.successDesc': 'Sizning javobingiz qabul qilindi. Sizni to\'yimizda ko\'rishdan benihoyat mamnunmiz!',
-    'rsvp.hotlineTitle': 'To\'y tashkilotchilari bog\'lanishi bilan:',
-    'rsvp.hotlineDesc': 'Saidovlar va Xidirovlar xonadonlari mas\'ullari',
-    'rsvp.callBtn': 'Qo\'ng\'iroq',
-    'rsvp.telegramBtn': 'Telegram',
 
     // Wishes
     'wishes.badge': '10.01.2027 • BUXORO',
@@ -233,9 +132,7 @@ export const TRANSLATIONS: Record<Language, Record<string, string>> = {
   ru: {
     // Nav
     'nav.invitation': 'Приглашение',
-    'nav.schedule': 'Программа',
     'nav.venue': 'Локация',
-    'nav.rsvp': 'RSVP',
     'nav.wishes': 'Пожелания',
 
     // Wax seal intro
@@ -265,36 +162,9 @@ export const TRANSLATIONS: Record<Language, Record<string, string>> = {
     'hero.addToCalendar': 'Сохранить в Календарь',
     'hero.calendarGoogle': 'Google Календарь',
     'hero.calendarIcs': 'Apple / Outlook (.ics)',
-    'hero.audio_playing': 'Юлдуз Усманова — Романтический Вальс',
+    'hero.viewVenue': 'Посмотреть Локацию',
+    'hero.audio_playing': 'Рустам Файзиев — Dunyadan Uzak',
     'hero.audio_live': 'LIVE',
-
-    // Schedule
-    'schedule.badge': 'ПРОГРАММА ТОРЖЕСТВА',
-    'schedule.title': 'Тайминг и Программа Вечера',
-    'schedule.steps': '4 ЭТАПА',
-    'schedule.subtitle': 'Каждое мгновение станет прекрасным и незабываемым воспоминанием',
-    'schedule.badge.welcome': 'ВСТРЕЧА ГОСТЕЙ',
-    'schedule.photoshoot.title': 'Встреча Гостей и Фотосессия',
-    'schedule.photoshoot.desc': 'Красная дорожка, живое звучание скрипки, приветственные напитки и памятные фотографии с молодожёнами.',
-    'schedule.badge.banquet': 'БАНКЕТ',
-    'schedule.banquet.title': 'Торжественное Открытие Банкета',
-    'schedule.banquet.desc': 'Изысканные национальные и европейские блюда, тёплые тосты и праздничная концертная программа.',
-    'schedule.badge.dance': 'ПЕРВЫЙ ТАНЕЦ',
-    'schedule.waltz.title': 'Первый Танец Молодёжи',
-    'schedule.waltz.desc': 'Трогательный вальс молодожёнов в облаках лёгкого дыма и сиянии звёзд.',
-    'schedule.badge.finale': 'КУЛЬМИНАЦИЯ',
-    'schedule.cake.title': 'Свадебный Торт и Салют',
-    'schedule.cake.desc': 'Разрезание многоярусного торта, сладкие пожелания и грандиозный праздничный фейерверк.',
-
-    // Dress Code
-    'dresscode.title': 'Дресс-код (Dress Code)',
-    'dresscode.subtitle': 'Black Tie & Элегантный вечерний стиль',
-    'dresscode.desc': 'Элегантные вечерние наряды. Просим дам воздержаться от белых оттенков, оставив это право за невестой.',
-    'dresscode.colorsTitle': 'Рекомендуемая цветовая гамма:',
-    'dresscode.cChampagne': 'Шампань',
-    'dresscode.cSage': 'Шалфей (Sage)',
-    'dresscode.cGold': 'Золото',
-    'dresscode.cWine': 'Глубокий винный',
 
     // Venue
     'venue.title': 'Банкетный Зал и Локация',
@@ -311,37 +181,6 @@ export const TRANSLATIONS: Record<Language, Record<string, string>> = {
     'venue.adminTitle': 'Администрация Havas Premium',
     'venue.adminDesc': 'По вопросам проезда или встречи обращайтесь к координаторам',
     'venue.callAdmin': '+998 (93) 687-08-50',
-
-    // RSVP
-    'rsvp.headerBadge': 'RSVP АНКЕТА',
-    'rsvp.title': 'Подтверждение Присутствия',
-    'rsvp.subtitle': 'Семьи Саидовых и Хидировых с радостью ждут всех гостей',
-    'rsvp.name': 'Ваше имя и фамилия *',
-    'rsvp.namePlaceholder': 'Например: Сардор Алиев',
-    'rsvp.phone': 'Номер телефона *',
-    'rsvp.phonePlaceholder': '+998 90 123-45-67',
-    'rsvp.guestsCount': 'Количество гостей:',
-    'rsvp.person': 'Человек',
-    'rsvp.attendance': 'Ваше присутствие:',
-    'rsvp.attendingYes': '✓ С радостью приду! (Да)',
-    'rsvp.attendingNo': '✗ К сожалению, не смогу (По причине)',
-    'rsvp.diet': 'Предпочтения по меню:',
-    'rsvp.dietNational': 'Национальные блюда',
-    'rsvp.dietHalal': 'Халяльное мясо',
-    'rsvp.dietVeg': 'Вегетарианское',
-    'rsvp.dietKids': 'Детское меню',
-    'rsvp.songRequest': 'Любимая песня для диджея:',
-    'rsvp.songPlaceholder': 'Например: Юлдуз Усманова — Любовь...',
-    'rsvp.notes': 'Тёплые пожелания молодожёнам:',
-    'rsvp.notesPlaceholder': 'Счастливого пути и безграничной любви...',
-    'rsvp.submit': 'Подтвердить Присутствие',
-    'rsvp.submitting': 'Отправка...',
-    'rsvp.successTitle': 'Большое Спасибо!',
-    'rsvp.successDesc': 'Ваш ответ успешно сохранён. Будем рады видеть вас на торжестве!',
-    'rsvp.hotlineTitle': 'Связь с организаторами торжества:',
-    'rsvp.hotlineDesc': 'Представители семей Саидовых и Хидировых',
-    'rsvp.callBtn': 'Позвонить',
-    'rsvp.telegramBtn': 'Telegram',
 
     // Wishes
     'wishes.badge': '10.01.2027 • БУХАРА',
@@ -376,9 +215,7 @@ export const TRANSLATIONS: Record<Language, Record<string, string>> = {
   en: {
     // Nav
     'nav.invitation': 'Invitation',
-    'nav.schedule': 'Itinerary',
     'nav.venue': 'Venue',
-    'nav.rsvp': 'RSVP',
     'nav.wishes': 'Wishes',
 
     // Wax seal intro
@@ -408,36 +245,9 @@ export const TRANSLATIONS: Record<Language, Record<string, string>> = {
     'hero.addToCalendar': 'Add to Calendar',
     'hero.calendarGoogle': 'Google Calendar',
     'hero.calendarIcs': 'Apple / Outlook (.ics)',
-    'hero.audio_playing': 'Yulduz Usmanova — Romantic Melody',
+    'hero.viewVenue': 'View Venue Location',
+    'hero.audio_playing': 'Rustam Fayziyev — Dunyadan Uzak',
     'hero.audio_live': 'LIVE',
-
-    // Schedule
-    'schedule.badge': 'CELEBRATION ITINERARY',
-    'schedule.title': 'Wedding Day Itinerary',
-    'schedule.steps': '4 STAGES',
-    'schedule.subtitle': 'Turning every precious moment into an unforgettable memory',
-    'schedule.badge.welcome': 'WELCOME',
-    'schedule.photoshoot.title': 'Guest Welcome & Photo Session',
-    'schedule.photoshoot.desc': 'Red carpet welcome, live violin ensemble, champagne reception, and portraits with the newlyweds.',
-    'schedule.badge.banquet': 'BANQUET',
-    'schedule.banquet.title': 'Grand Wedding Banquet Opening',
-    'schedule.banquet.desc': 'Gourmet banquet dinner, heartfelt toasts, and celebratory musical concert.',
-    'schedule.badge.dance': 'FIRST DANCE',
-    'schedule.waltz.title': 'First Dance of the Newlyweds',
-    'schedule.waltz.desc': 'Romantic waltz of the newlyweds amidst gentle mist and starlight.',
-    'schedule.badge.finale': 'FINALE',
-    'schedule.cake.title': 'Wedding Cake & Fireworks Show',
-    'schedule.cake.desc': 'Grand cake cutting ceremony followed by a spectacular fireworks display.',
-
-    // Dress Code
-    'dresscode.title': 'Dress Code',
-    'dresscode.subtitle': 'Black Tie & Elegant Evening Attire',
-    'dresscode.desc': 'Formal evening attire in refined pastels or classic dark tones. We kindly request ladies to avoid white gowns to preserve the uniqueness of the bride.',
-    'dresscode.colorsTitle': 'Recommended color palette:',
-    'dresscode.cChampagne': 'Champagne',
-    'dresscode.cSage': 'Sage Green',
-    'dresscode.cGold': 'Gold Foil',
-    'dresscode.cWine': 'Deep Wine',
 
     // Venue
     'venue.title': 'Celebration Palace & Location',
@@ -454,37 +264,6 @@ export const TRANSLATIONS: Record<Language, Record<string, string>> = {
     'venue.adminTitle': 'Havas Premium Administration',
     'venue.adminDesc': 'For questions regarding directions, contact the wedding coordinators',
     'venue.callAdmin': '+998 (93) 687-08-50',
-
-    // RSVP
-    'rsvp.headerBadge': 'RSVP FORM',
-    'rsvp.title': 'Confirm Your Attendance',
-    'rsvp.subtitle': 'The Saidov and Khidirov families cordially welcome you',
-    'rsvp.name': 'Your Full Name *',
-    'rsvp.namePlaceholder': 'e.g. Sardor Aliyev',
-    'rsvp.phone': 'Phone Number *',
-    'rsvp.phonePlaceholder': '+998 90 123-45-67',
-    'rsvp.guestsCount': 'Number of guests:',
-    'rsvp.person': 'Guest(s)',
-    'rsvp.attendance': 'Will you attend:',
-    'rsvp.attendingYes': '✓ Joyfully Attending! (Yes)',
-    'rsvp.attendingNo': '✗ Regretfully Declining',
-    'rsvp.diet': 'Meal / dietary preferences:',
-    'rsvp.dietNational': 'Traditional Cuisine',
-    'rsvp.dietHalal': 'Halal Meat',
-    'rsvp.dietVeg': 'Vegetarian',
-    'rsvp.dietKids': 'Kids Menu',
-    'rsvp.songRequest': 'Favorite song for the DJ:',
-    'rsvp.songPlaceholder': 'e.g. Yulduz Usmanova — Romantic...',
-    'rsvp.notes': 'Warm wishes for the newlyweds:',
-    'rsvp.notesPlaceholder': 'Wishing you eternal joy and devotion...',
-    'rsvp.submit': 'Confirm Attendance',
-    'rsvp.submitting': 'Confirming...',
-    'rsvp.successTitle': 'Thank You So Much!',
-    'rsvp.successDesc': 'Your response has been confirmed. We look forward to celebrating together!',
-    'rsvp.hotlineTitle': 'Questions? Contact the wedding organizers:',
-    'rsvp.hotlineDesc': 'Representatives of Saidov and Khidirov families',
-    'rsvp.callBtn': 'Call Organizer',
-    'rsvp.telegramBtn': 'Telegram',
 
     // Wishes
     'wishes.badge': '10.01.2027 • BUKHARA',
