@@ -15,8 +15,13 @@ export const AudioPlayer: React.FC<AudioPlayerProps> = ({ isPlaying, onToggle })
       <button
         onClick={onToggle}
         aria-label={isPlaying ? t('audio.pauseAria') : t('audio.playAria')}
-        className="relative group flex items-center gap-2.5 px-3.5 py-2.5 bg-surface/90 hover:bg-velvet text-gold border border-gold/40 shadow-velvet-depth hover:border-gold transition-all duration-300 backdrop-blur-md"
+        className="relative group flex items-center gap-2.5 px-3.5 py-2.5 bg-surface/90 hover:bg-velvet text-gold border border-gold/40 shadow-velvet-depth hover:border-gold transition-all duration-300 backdrop-blur-md btn-tactile"
       >
+        {/* Pulsing acoustic halo ring when playing */}
+        {isPlaying && (
+          <span className="absolute -inset-1.5 border border-gold/50 animate-speaker-ring pointer-events-none" />
+        )}
+
         <span className="relative flex h-3 w-3 items-center justify-center">
           {isPlaying ? (
             <>
@@ -29,9 +34,9 @@ export const AudioPlayer: React.FC<AudioPlayerProps> = ({ isPlaying, onToggle })
         </span>
 
         {isPlaying ? (
-          <Volume2 className="w-4 h-4 text-gold animate-pulse" />
+          <Volume2 className="w-4 h-4 text-gold animate-pulse relative z-10" />
         ) : (
-          <VolumeX className="w-4 h-4 text-champagne-muted" />
+          <VolumeX className="w-4 h-4 text-champagne-muted relative z-10" />
         )}
 
         <span className="hidden sm:inline text-xs uppercase tracking-widest font-sans font-medium text-champagne group-hover:text-gold transition-colors">

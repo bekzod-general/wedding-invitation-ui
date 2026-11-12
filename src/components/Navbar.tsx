@@ -47,15 +47,15 @@ export const Navbar: React.FC<NavbarProps> = ({
   };
 
   return (
-    <header className="fixed top-0 left-0 right-0 z-40 bg-surface-lowest/95 backdrop-blur-md border-b border-gold/30 transition-all">
+    <header className="fixed top-0 left-0 right-0 z-40 bg-surface-lowest/95 backdrop-blur-md border-b border-gold/30 transition-all shadow-[0_4px_20px_rgba(0,0,0,0.5)]">
       <div className="max-w-lg mx-auto px-3 sm:px-4 h-14 flex items-center justify-between">
         {/* Brand Monogram & Section Breadcrumb */}
         <button
           onClick={() => scrollTo('hero')}
-          className="flex items-center gap-2 text-left group min-w-0"
+          className="flex items-center gap-2 text-left group min-w-0 btn-tactile"
           aria-label="Scroll to top"
         >
-          <div className="w-7 h-7 border border-gold/70 flex items-center justify-center bg-velvet text-gold font-serif text-xs font-bold shadow-sm flex-shrink-0">
+          <div className="w-7 h-7 border border-gold/70 flex items-center justify-center bg-velvet text-gold font-serif text-xs font-bold shadow-sm flex-shrink-0 group-hover:border-gold">
             BP
           </div>
           <div className="min-w-0">
@@ -75,7 +75,7 @@ export const Navbar: React.FC<NavbarProps> = ({
 
         {/* Right controls: Language Switcher & Audio Toggle Button */}
         <div className="flex items-center gap-2">
-          {/* Language Switcher Segmented Control */}
+          {/* Language Switcher Segmented Control with Tactile Feedback */}
           <div className="flex items-center border border-gold/40 bg-surface-lowest p-0.5">
             {(['uz', 'ru', 'en'] as Language[]).map((lang) => {
               const isSelected = currentLang === lang;
@@ -83,10 +83,10 @@ export const Navbar: React.FC<NavbarProps> = ({
                 <button
                   key={lang}
                   onClick={() => handleSelectLanguage(lang)}
-                  className={`px-2 py-0.5 text-[10px] uppercase tracking-wider font-semibold transition-all relative ${
+                  className={`px-2.5 py-0.5 text-[10px] uppercase tracking-wider font-semibold transition-all relative ${
                     isSelected
                       ? 'bg-velvet text-gold font-bold shadow-sm'
-                      : 'text-champagne-muted/60 hover:text-champagne'
+                      : 'text-champagne-muted/60 hover:text-champagne hover:bg-surface-high/40'
                   }`}
                   aria-pressed={isSelected}
                 >
@@ -99,11 +99,11 @@ export const Navbar: React.FC<NavbarProps> = ({
             })}
           </div>
 
-          {/* Audio Quick Toggle */}
+          {/* Audio Quick Toggle with Pulsing Halo Ring */}
           {onToggleAudio && (
             <button
               onClick={onToggleAudio}
-              className={`p-1.5 border transition-all ${
+              className={`relative p-1.5 border transition-all btn-tactile ${
                 isPlayingAudio
                   ? 'bg-velvet border-gold text-gold shadow-gold-subtle'
                   : 'bg-surface-lowest border-gold/30 text-champagne-muted hover:border-gold/60'
@@ -111,10 +111,13 @@ export const Navbar: React.FC<NavbarProps> = ({
               title={t('audio.music')}
               aria-label={isPlayingAudio ? t('audio.pauseAria') : t('audio.playAria')}
             >
+              {isPlayingAudio && (
+                <span className="absolute -inset-1 rounded-none border border-gold/60 animate-speaker-ring pointer-events-none" />
+              )}
               {isPlayingAudio ? (
-                <Volume2 className="w-3.5 h-3.5 text-gold animate-pulse" />
+                <Volume2 className="w-3.5 h-3.5 text-gold animate-pulse relative z-10" />
               ) : (
-                <VolumeX className="w-3.5 h-3.5 text-champagne-muted" />
+                <VolumeX className="w-3.5 h-3.5 text-champagne-muted relative z-10" />
               )}
             </button>
           )}

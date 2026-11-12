@@ -7,6 +7,7 @@ import {
   downloadIcsFile,
 } from '../data/weddingData';
 import { useParallaxTilt } from '../hooks/useParallaxTilt';
+import { FlipDigit } from './FlipDigit';
 import {
   Calendar,
   ChevronDown,
@@ -76,8 +77,6 @@ export const HeroSection: React.FC<HeroSectionProps> = ({
     return () => clearInterval(interval);
   }, []);
 
-  const formatNumber = (num: number) => String(num).padStart(2, '0');
-
   const scrollToVenue = () => {
     const el = document.getElementById('venue');
     if (el) el.scrollIntoView({ behavior: 'smooth' });
@@ -92,40 +91,44 @@ export const HeroSection: React.FC<HeroSectionProps> = ({
       <div className="absolute top-1/4 left-1/2 -translate-x-1/2 -translate-y-1/2 w-80 sm:w-96 h-80 sm:h-96 bg-velvet/30 rounded-full blur-[100px] pointer-events-none" />
 
       <div className="w-full max-w-lg mx-auto text-center relative z-10 flex flex-col items-center">
-        {/* Monogram Crest with Ring Frame and Floating Aura */}
-        <div className="relative inline-flex items-center justify-center my-2 animate-float-gentle">
-          <div className="w-20 h-20 sm:w-24 sm:h-24 border border-gold/60 flex flex-col items-center justify-center bg-velvet/50 shadow-velvet-depth relative group">
-            <div className="absolute inset-1.5 border border-gold/30 pointer-events-none" />
-            <span className="font-serif text-2xl sm:text-3xl text-gold font-light tracking-widest drop-shadow-[0_2px_8px_rgba(212,175,55,0.4)]">
-              BP
-            </span>
-            <span className="text-[8px] uppercase tracking-widest text-champagne-muted font-sans mt-0.5">
-              {t('hero.weddingCelebration')}
-            </span>
+        {/* Cascade 1: Monogram Crest with Ring Frame and Floating Aura */}
+        <div className="animate-cascade-1 w-full flex flex-col items-center">
+          <div className="relative inline-flex items-center justify-center my-2 animate-float-gentle">
+            <div className="w-20 h-20 sm:w-24 sm:h-24 border border-gold/60 flex flex-col items-center justify-center bg-velvet/50 shadow-velvet-depth relative group">
+              <div className="absolute inset-1.5 border border-gold/30 pointer-events-none" />
+              <span className="font-serif text-2xl sm:text-3xl text-gold font-light tracking-widest drop-shadow-[0_2px_8px_rgba(212,175,55,0.4)]">
+                BP
+              </span>
+              <span className="text-[8px] uppercase tracking-widest text-champagne-muted font-sans mt-0.5">
+                {t('hero.weddingCelebration')}
+              </span>
+            </div>
           </div>
+
+          {/* City Tag Badge */}
+          <p className="text-[10px] sm:text-xs uppercase tracking-extrawide text-gold font-sans font-semibold mt-4 mb-2">
+            {t('hero.city_badge')}
+          </p>
         </div>
 
-        {/* City Tag Badge */}
-        <p className="text-[10px] sm:text-xs uppercase tracking-extrawide text-gold font-sans font-semibold mt-4 mb-2">
-          {t('hero.city_badge')}
-        </p>
+        {/* Cascade 2: Couple Names in Bodoni Moda with Metallic Gold Shimmer */}
+        <div className="animate-cascade-2 w-full">
+          <h1 className="font-serif text-4xl sm:text-5xl font-normal tracking-tight leading-none mb-1 text-gold-shimmer drop-shadow-sm">
+            <span>{t('hero.groom')}</span>
+            <span className="text-gold font-serif italic mx-2.5 sm:mx-3 font-normal">
+              &amp;
+            </span>
+            <span>{t('hero.bride')}</span>
+          </h1>
 
-        {/* Couple Names in Bodoni Moda with Metallic Gold Shimmer */}
-        <h1 className="font-serif text-4xl sm:text-5xl font-normal tracking-tight leading-none mb-1 text-gold-shimmer drop-shadow-sm">
-          <span>{t('hero.groom')}</span>
-          <span className="text-gold font-serif italic mx-2.5 sm:mx-3 font-normal">
-            &amp;
-          </span>
-          <span>{t('hero.bride')}</span>
-        </h1>
+          {/* Subtitle Surnames */}
+          <p className="font-sans text-[11px] sm:text-xs tracking-widest text-gold/80 uppercase mb-5 font-medium">
+            {t('hero.names_sub')}
+          </p>
+        </div>
 
-        {/* Subtitle Surnames */}
-        <p className="font-sans text-[11px] sm:text-xs tracking-widest text-gold/80 uppercase mb-5 font-medium">
-          {t('hero.names_sub')}
-        </p>
-
-        {/* Bismillahir Rohmanir Rohiym Sacred Badge & Quote */}
-        <div className="w-full bg-surface-lowest/80 border border-gold/35 p-3.5 sm:p-4 mb-6 shadow-sm">
+        {/* Cascade 3: Bismillahir Rohmanir Rohiym Sacred Badge & Quote */}
+        <div className="animate-cascade-3 w-full bg-surface-lowest/80 border border-gold/35 p-3.5 sm:p-4 mb-6 shadow-sm">
           <div className="inline-flex items-center justify-center gap-2 mb-1.5">
             <Sparkles className="w-3.5 h-3.5 text-gold" />
             <span className="text-[11px] sm:text-xs font-serif tracking-widest text-gold uppercase font-medium">
@@ -138,15 +141,16 @@ export const HeroSection: React.FC<HeroSectionProps> = ({
           </p>
         </div>
 
-        {/* Formal Invitation Card with 3D Parallax Tilt */}
+        {/* Cascade 4: Formal Invitation Card with Expanding Gold Corner Flourishes */}
         <div
           ref={invitationCardRef}
-          className="w-full glass-card-elevated interactive-tilt p-5 sm:p-6 mb-6 text-left relative overflow-hidden"
+          className="animate-cascade-4 w-full glass-card-elevated interactive-tilt p-5 sm:p-6 mb-6 text-left relative overflow-hidden"
         >
-          <div className="absolute top-2 left-2 w-2 h-2 border-t border-l border-gold/60" />
-          <div className="absolute top-2 right-2 w-2 h-2 border-t border-r border-gold/60" />
-          <div className="absolute bottom-2 left-2 w-2 h-2 border-b border-l border-gold/60" />
-          <div className="absolute bottom-2 right-2 w-2 h-2 border-b border-r border-gold/60" />
+          {/* Expanding Decorative Corner Brackets */}
+          <div className="absolute top-2 left-2 w-3.5 h-3.5 border-t-2 border-l-2 border-gold/80 animate-corner-tl pointer-events-none" />
+          <div className="absolute top-2 right-2 w-3.5 h-3.5 border-t-2 border-r-2 border-gold/80 animate-corner-tr pointer-events-none" />
+          <div className="absolute bottom-2 left-2 w-3.5 h-3.5 border-b-2 border-l-2 border-gold/80 animate-corner-bl pointer-events-none" />
+          <div className="absolute bottom-2 right-2 w-3.5 h-3.5 border-b-2 border-r-2 border-gold/80 animate-corner-br pointer-events-none" />
 
           {/* Watermark Crest */}
           <div className="absolute right-4 bottom-4 text-gold/5 font-serif text-7xl select-none pointer-events-none font-bold">
@@ -169,7 +173,7 @@ export const HeroSection: React.FC<HeroSectionProps> = ({
           </div>
         </div>
 
-        {/* Live Countdown Timer Card with 3D Parallax Tilt */}
+        {/* Live Countdown Timer Card with Smooth Vertical Slide-Fade Digits */}
         <div
           ref={countdownCardRef}
           className="w-full glass-card interactive-tilt p-4 sm:p-5 mb-5 relative overflow-hidden"
@@ -179,45 +183,35 @@ export const HeroSection: React.FC<HeroSectionProps> = ({
           </p>
 
           <div className="grid grid-cols-4 gap-2 mb-4">
-            {[
-              { label: t('hero.days'), value: timeLeft.days },
-              { label: t('hero.hours'), value: timeLeft.hours },
-              { label: t('hero.minutes'), value: timeLeft.minutes },
-              { label: t('hero.seconds'), value: timeLeft.seconds },
-            ].map((unit, index) => (
-              <div
-                key={index}
-                className="bg-surface-container/90 border border-gold/40 p-2 sm:p-3 text-center shadow-sm"
-              >
-                <div className="font-serif text-xl sm:text-2xl text-gold font-light tracking-tight">
-                  {formatNumber(unit.value)}
-                </div>
-                <div className="text-[9px] uppercase tracking-wider text-champagne-muted font-sans mt-0.5">
-                  {unit.label}
-                </div>
-              </div>
-            ))}
+            <FlipDigit value={timeLeft.days} label={t('hero.days')} />
+            <FlipDigit value={timeLeft.hours} label={t('hero.hours')} />
+            <FlipDigit value={timeLeft.minutes} label={t('hero.minutes')} />
+            <FlipDigit value={timeLeft.seconds} label={t('hero.seconds')} />
           </div>
 
           {/* Add to Calendar Dropdown Button */}
           <div className="relative w-full">
             <button
               onClick={() => setShowCalendarOptions(!showCalendarOptions)}
-              className="w-full py-2.5 px-4 bg-velvet/70 hover:bg-velvet text-champagne font-sans text-xs uppercase tracking-widest font-medium border border-gold/50 hover:border-gold transition-all flex items-center justify-center gap-2"
+              className="w-full py-2.5 px-4 bg-velvet/70 hover:bg-velvet text-champagne font-sans text-xs uppercase tracking-widest font-medium border border-gold/50 hover:border-gold transition-all flex items-center justify-center gap-2 btn-tactile"
             >
               <Calendar className="w-3.5 h-3.5 text-gold" />
               <span>{t('hero.addToCalendar')}</span>
-              <ChevronDown className="w-3 h-3 text-gold/70" />
+              <ChevronDown
+                className={`w-3 h-3 text-gold/70 transition-transform duration-300 ${
+                  showCalendarOptions ? 'rotate-180' : 'rotate-0'
+                }`}
+              />
             </button>
 
             {showCalendarOptions && (
-              <div className="absolute left-0 right-0 mt-1 bg-surface-lowest border border-gold/50 shadow-velvet-depth z-30 p-1">
+              <div className="absolute left-0 right-0 mt-1 bg-surface-lowest border border-gold/50 shadow-velvet-depth z-30 p-1 animate-cascade-1">
                 <a
                   href={getGoogleCalendarUrl(currentLang)}
                   target="_blank"
                   rel="noopener noreferrer"
                   onClick={() => setShowCalendarOptions(false)}
-                  className="block px-3 py-2 text-xs text-champagne hover:text-gold hover:bg-velvet/40 text-left transition-colors"
+                  className="block px-3 py-2 text-xs text-champagne hover:text-gold hover:bg-velvet/40 text-left transition-colors btn-tactile"
                 >
                   {t('hero.calendarGoogle')}
                 </a>
@@ -226,7 +220,7 @@ export const HeroSection: React.FC<HeroSectionProps> = ({
                     downloadIcsFile(currentLang);
                     setShowCalendarOptions(false);
                   }}
-                  className="block w-full px-3 py-2 text-xs text-champagne hover:text-gold hover:bg-velvet/40 text-left transition-colors border-t border-gold/15"
+                  className="block w-full px-3 py-2 text-xs text-champagne hover:text-gold hover:bg-velvet/40 text-left transition-colors border-t border-gold/15 btn-tactile"
                 >
                   {t('hero.calendarIcs')}
                 </button>
@@ -240,13 +234,17 @@ export const HeroSection: React.FC<HeroSectionProps> = ({
           <div className="flex items-center gap-2.5 text-left overflow-hidden">
             <button
               onClick={onToggleAudio}
-              className="w-7 h-7 rounded-none bg-gold-foil text-void flex items-center justify-center flex-shrink-0 shadow-sm transition-transform hover:scale-105 active:scale-95"
+              className="relative w-7 h-7 rounded-none bg-gold-foil text-void flex items-center justify-center flex-shrink-0 shadow-sm transition-transform hover:scale-105 active:scale-95"
               aria-label={isPlayingAudio ? t('audio.pauseAria') : t('audio.playAria')}
             >
+              {/* Pulsing acoustic halo ring when active */}
+              {isPlayingAudio && (
+                <span className="absolute -inset-1.5 rounded-none border border-gold/60 animate-speaker-ring pointer-events-none" />
+              )}
               {isPlayingAudio ? (
-                <Pause className="w-3.5 h-3.5 text-void" />
+                <Pause className="w-3.5 h-3.5 text-void relative z-10" />
               ) : (
-                <Play className="w-3.5 h-3.5 text-void translate-x-0.5" />
+                <Play className="w-3.5 h-3.5 text-void translate-x-0.5 relative z-10" />
               )}
             </button>
             <div className="min-w-0">
@@ -297,7 +295,7 @@ export const HeroSection: React.FC<HeroSectionProps> = ({
           </p>
           <button
             onClick={scrollToVenue}
-            className="w-full py-2 bg-velvet/80 hover:bg-velvet border border-gold/50 text-gold text-xs uppercase tracking-widest font-semibold flex items-center justify-center gap-2 transition-all hover:scale-[1.01] active:scale-95"
+            className="w-full py-2 bg-velvet/80 hover:bg-velvet border border-gold/50 text-gold text-xs uppercase tracking-widest font-semibold flex items-center justify-center gap-2 transition-all hover:scale-[1.01] active:scale-95 btn-tactile"
           >
             <MapPin className="w-3.5 h-3.5 text-gold" />
             <span>{t('hero.viewOnMap')}</span>

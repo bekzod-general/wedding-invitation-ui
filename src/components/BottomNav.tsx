@@ -38,7 +38,7 @@ export const BottomNav: React.FC<BottomNavProps> = ({
 
   return (
     <nav
-      className="fixed bottom-0 left-0 right-0 z-40 bg-surface-lowest/95 backdrop-blur-md border-t border-gold/30 px-2 py-1.5 transition-all shadow-[0_-4px_20px_rgba(0,0,0,0.6)]"
+      className="fixed bottom-0 left-0 right-0 z-40 bg-surface-lowest/95 backdrop-blur-md border-t border-gold/30 px-2 py-1.5 transition-all shadow-[0_-4px_25px_rgba(0,0,0,0.7)]"
       aria-label="Mobile navigation"
     >
       <div className="max-w-md mx-auto grid grid-cols-3 gap-1">
@@ -50,19 +50,21 @@ export const BottomNav: React.FC<BottomNavProps> = ({
             <button
               key={item.id}
               onClick={() => onNavigate(item.id)}
-              className={`flex flex-col items-center justify-center py-1.5 px-1 rounded-none transition-all relative ${
+              className={`flex flex-col items-center justify-center py-1.5 px-1 rounded-none transition-all duration-200 relative select-none btn-tactile ${
                 isActive
                   ? 'text-gold'
-                  : 'text-champagne-muted/70 hover:text-champagne'
+                  : 'text-champagne-muted/70 hover:text-champagne hover:scale-105'
               }`}
             >
-              {/* Active top indicator line */}
+              {/* Active top indicator line with golden shimmer aura */}
               {isActive && (
-                <span className="absolute -top-1.5 left-2 right-2 h-[2px] bg-gold shadow-gold-subtle" />
+                <span className="absolute -top-1.5 left-2 right-2 h-[2px] bg-gold shadow-[0_0_10px_rgba(212,175,55,0.8)]" />
               )}
               <IconComponent
-                className={`w-4 h-4 mb-0.5 transition-transform ${
-                  isActive ? 'scale-110 text-gold stroke-[2.2]' : 'stroke-[1.6]'
+                className={`w-4 h-4 mb-0.5 transition-all duration-300 ${
+                  isActive
+                    ? 'scale-110 text-gold stroke-[2.4] drop-shadow-[0_0_6px_rgba(212,175,55,0.6)]'
+                    : 'stroke-[1.6]'
                 }`}
               />
               <span className="font-sans text-[9px] uppercase tracking-wider font-semibold">
