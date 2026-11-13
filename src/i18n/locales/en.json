@@ -100,7 +100,12 @@
     "voiceTeaser": "Voice note greeting (30 sec audio greeting)",
     "wallTitle": "Guestbook Messages",
     "wallBadge": "Blessings",
-    "countSuffix": "wishes"
+    "countSuffix": "wishes",
+    "pendingNoticeTitle": "Wish Received With Love!",
+    "pendingNoticeDesc": "Thank you so much! Your heartfelt blessing has been forwarded to Bekzod & Parvina. Once confirmed by the couple, it will appear on the wedding wall.",
+    "pendingBadge": "Pending couple's approval",
+    "submitting": "Sending...",
+    "closeModal": "Understood, thank you"
   },
   "audio": {
     "music": "Music",

@@ -1,0 +1,9 @@
+name = "wedding-moderation-worker"
+main = "index.ts"
+compatibility_date = "2024-11-01"
+
+[vars]
+TELEGRAM_BOT_TOKEN = "6970194778:AAEP62gzzcTRzJA08kiUXdFTWsCXX4VGmhE"
+TELEGRAM_CHAT_ID = "-1004380822426"
+TELEGRAM_TOPIC_ID = "15"
+FIREBASE_PROJECT_ID = "wedding-invitation-ui"

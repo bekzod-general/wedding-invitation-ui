@@ -100,7 +100,12 @@
     "voiceTeaser": "Ovozli tabrik qoldirish (30 soniyalik audio tilak)",
     "wallTitle": "Mehmonlar Tilaklari",
     "wallBadge": "Og'yo'l tilaklari",
-    "countSuffix": "ta tilak"
+    "countSuffix": "ta tilak",
+    "pendingNoticeTitle": "Tilagingiz Qabul Qilindi!",
+    "pendingNoticeDesc": "Katta rahmat! Sizning samimiy tilagingiz Bekzod va Parvinaga yuborildi. Kelin-kuyov tasdiqlashi bilanoq u to'y devorida barchaga ko'rinadi.",
+    "pendingBadge": "Kelin-kuyov tasdiqlashi kutilmoqda",
+    "submitting": "Yuborilmoqda...",
+    "closeModal": "Tushundim, rahmat"
   },
   "audio": {
     "music": "Musiqa",

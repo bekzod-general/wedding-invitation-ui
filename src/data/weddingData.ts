@@ -11,6 +11,8 @@ export interface Wish {
   dateType?: 'today' | 'yesterday' | 'justNow';
   time?: string;
   hearts: number;
+  status?: 'pending' | 'approved' | 'rejected';
+  createdAt?: number | string | any;
 }
 
 export const WEDDING_CONFIG = {
@@ -66,48 +68,7 @@ const CALENDAR_INFO: Record<Language, { title: string; details: string; location
   },
 };
 
-export const INITIAL_WISHES: Wish[] = [
-  {
-    id: 'wish-1',
-    name: 'Sardor & Nilufar',
-    initials: 'S&N',
-    relationshipKey: 'friends',
-    message: 'Ikki yosh baxtli bo\'lsin! Qalbingizdagi sevgi va o\'zaro hurmat hech qachon so\'nmasin. Har bir kuningiz to\'ydagidek shodlik va shukronalik bilan to\'lsin!',
-    dateType: 'today',
-    time: '18:42',
-    hearts: 34,
-  },
-  {
-    id: 'wish-2',
-    name: 'Семья Каримовых',
-    initials: 'CK',
-    relationshipKey: 'relatives',
-    message: 'Совет да любовь! Пусть каждый день совместной жизни будет наполнен нежностью, гармонией и улыбками. Крепкого вам семейного очага и безграничного счастья!',
-    dateType: 'today',
-    time: '16:15',
-    hearts: 28,
-  },
-  {
-    id: 'wish-3',
-    name: 'Alex & Family',
-    initials: 'AF',
-    relationshipKey: 'colleagues',
-    message: 'Wishing you both a lifetime of endless joy, radiant love, and harmonious companionship! Congratulations on building such a beautiful family together.',
-    dateType: 'today',
-    time: '14:02',
-    hearts: 45,
-  },
-  {
-    id: 'wish-4',
-    name: 'Akmal aka',
-    initials: 'AA',
-    relationshipKey: 'groom',
-    message: 'To\'ylar muborak! Ostonangizdan qut-baraka va fayz arimasin! Bekzodbek va Parvinaning xonadoni hamisha yaxshi kunlar, go\'zal to\'ylar bilan to\'lsin!',
-    dateType: 'yesterday',
-    time: '21:40',
-    hearts: 53,
-  },
-];
+export const INITIAL_WISHES: Wish[] = [];
 
 // Localized Google Calendar URL generator helper
 export const getGoogleCalendarUrl = (lang: Language = 'uz'): string => {
